@@ -18,12 +18,13 @@ chaque utilisateur a ses réglages perso.
 * réglages{dict ou objet}
 	* heure actuelle
 	* alarme[array]
+		* heure
 		* son{dictionary}
-			* on/off
+			* etat : on/off
 			* choix musique
 			* volume
 		* aube{dictionary}
-			* on/off 
+			* etat : on/off 
 			* durée
 			* intensité
 * listeMusique[array]
