@@ -12,7 +12,7 @@ sans avoir besoin de coder directement sur la raspberry pi.
 
 Git et github vont nous permettre de collaborer ensemble facilement. De plus,
 le code sera facilement transférable sur la raspberry pi. Comme vous ne
-connaissez pas forcément ces outils, j'ai essayé de créé un workflow facile à
+connaissez pas forcément ces outils, j'ai essayé de créer un workflow facile à
 suivre.
 
 Les groupes son et lumière doivent créer/modifier leurs fichiers dans leurs
@@ -26,9 +26,9 @@ dessous.
 
 ### Set up
 
-1. Installer git
-2. Créer un compte [github](http://github.com/)
-3. M'envoyer votre nom d'utilisateur github
+1. Installez git
+2. Créez un compte [github](http://github.com/)
+3. envoyez moi votre nom d'utilisateur github pour que je puisse vous ajouter à la liste des collaborateurs
 4. `git clone https://github.com/GarreauArthur/bellaube.git`
 
 ### Modifier des fichiers
@@ -52,7 +52,7 @@ Git est un système de contrôle de version distribuée, c'est-à-dire que c'est
 logiciel qui permet de créer un historique des modifications de fichiers
 sources. Git est un logiciel en invite de commande (terminal).
 
-Il y a un petit tuto rapide : [Git petit guide](http://rogerdudler.github.io/git-guide/index.fr.html)
+Il y a un bon petit tuto rapide : [Git petit guide](http://rogerdudler.github.io/git-guide/index.fr.html)
 
 Github est un site web qui permet de stocker l'historique des modifications
 créé par git sur un serveur, pour que plusieurs personnes puissent travailler
@@ -84,7 +84,7 @@ faire cela, on utilise la commande :
 
 	git add nomFichier
 
-Une fois tous les fichiers que vous voulez indexés sont ajoutés à l'index,
+Une fois tous les fichiers que vous voulez indexer sont ajoutés à l'index,
 vous pouvez faire une sauvegarde des modifications en créant un commit :
 
 	git commit -m "Message qui explique les modifications apportées"
@@ -96,7 +96,7 @@ Vous pouvez aussi faire :
 Un éditeur de texte (vim ou nano) va s'ouvrir, vous demandant de taper un
 message, ce message est obligatoire pour que la sauvegarde soit faite.
 
-Pour poussez les modifications sur le serveur (dépôt distant) :
+Pour pousser les modifications sur le serveur (dépôt distant) :
 
 	git push
 
@@ -113,6 +113,19 @@ Pour voir l'historique des modifications de façon plus courte et plus lisible :
 	git log --oneline --graph --decorate
 
 
+-------------
+
+## Liste des dépendances
+
+Si vous utilisez des bibliothèques spéciales nécessaires au bon fonctionnement
+du programme, c'est une bonne idée d'indiquer comment les installer ici.
+(C'est surement pas la meilleure façon de faire ça, mais au moins c'est facile)
+
+	# à vérifier parce que je ne m'en souviens plus
+	sudo pip install RPLCD
+	sudo apt-get install python-smbus
+	sudo apt-get install pigpio python-pigpio python3-pigpio
+	# fin à vérifier
 
 
 
