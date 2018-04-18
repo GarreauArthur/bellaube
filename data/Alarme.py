@@ -66,8 +66,3 @@ class Alarme:
         """a doit être un objet de type Heure
         """
         self.heure = a
-
-
-alarme = Alarme()
-alarme.setHeuresEtMinutesAlarme(6,45)
-print(alarme.heure)
