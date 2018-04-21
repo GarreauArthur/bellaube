@@ -43,3 +43,14 @@ class Heure:
 
 	def getSecondes(self):
 		return self.heure.second
+
+	def __eq__(self,h2):
+		"""Permet de comparer deux heures
+		  if heure1 == heure2:
+		"""
+		return (self.heure.hour == h2.heure.hour
+		        and self.heure.minute == h2.heure.minute
+		        and self.heure.second == h2.heure.second)
+
+	def __ne__(self,h2):
+		return not self == h2
