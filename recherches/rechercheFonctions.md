@@ -29,6 +29,9 @@ chaque utilisateur a ses réglages perso.
 			* intensité
 * listeMusique[array]
 
+On peut, si on veut, enregistrer l'état du réveil en sérialisant les données
+avec le module python pickle
+
 ## classe = composants matériels ?
 
 Cela peut être une bonne idée d'avoir un object par composants, ex :
