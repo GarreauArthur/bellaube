@@ -1,4 +1,4 @@
-
+#-*- coding: utf-8 -*-
 class Reglages:
   """
   Cette classe permet de stocker l'ensemble des réglages nécessaires à
