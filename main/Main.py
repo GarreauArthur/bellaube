@@ -1,10 +1,11 @@
 #-*- coding: utf-8 -*-
 from time import sleep
-from Heure import Heure
-from Alarme import Alarme
-from Horloge import Horloge
-from Reglages import Reglages
-import RPi.GPIO as GPIO
+from ..data.Heure import Heure
+from ..data.Alarme import Alarme
+from ..data.Horloge import Horloge
+from ..data.Reglages import Reglages
+#import RPi.GPIO as GPIO
+from ..data.Musique import Musique
 
 def main():
     '''Instanciation Variables globales'''

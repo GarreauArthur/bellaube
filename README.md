@@ -43,6 +43,17 @@ quelqu'un est en train de modifier (sauf si vous connaissez bien git).
 5. Envoyez vos modifs sur le serveur github : `git push`
 6. Entrez votre nom d'utilisateur et mot de passe pour confirmer
 
+### Lancer script
+
+Pour exécuter un script il faut se placer dans le dossier contenant le dossier
+`bellaube` et utiliser la syntaxe suivante :
+
+	python -m bellaube.[package.[subpackage.]...]module
+
+exemples :
+
+	python -m bellaube.main.Main
+	python -m bellaube.data.Horloge
 
 ## Version longue
 

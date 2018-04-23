@@ -1,4 +1,4 @@
-from Heure import Heure
+from .Heure import Heure
 
 
 class Alarme:
@@ -66,3 +66,8 @@ class Alarme:
         """a doit être un objet de type Heure
         """
         self.heure = a
+
+if __name__ == '__main__':
+    a = Alarme()
+    a.setHeuresAlarme(7)
+    print(a.heure)
