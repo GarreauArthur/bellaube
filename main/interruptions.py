@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import random
 from ..ecran.EcranLCD import EcranLCD
+from time import sleep
 GPIO.setmode(GPIO.BCM)
 
 # set up as input
@@ -16,8 +17,14 @@ def callbackkk(channel):
   else:
     ecran.printString("Nope")
 
-ecran.printString("R U a Faggot ?")
+ecran.printString("R u A FAGoT")
 
 GPIO.add_event_detect(17, GPIO.FALLING, callback=callbackkk, bouncetime=300)
 
-GPIO.cleanup()
+try:
+  while 1:
+    sleep(1)
+except KeyboardInterrupt:
+  GPIO.cleanup()
+
+#GPIO.cleanup()
