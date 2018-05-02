@@ -7,7 +7,7 @@ class Aube:
 	utilisateur)
 	"""
 	ON = 1
-	OFF = 1
+	OFF = 0
 
 	def __init__(self):
 		self.intensite = 0
