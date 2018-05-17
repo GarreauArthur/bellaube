@@ -7,8 +7,11 @@ class EcranLCD:
     """
     Cette classe permet de simplifier l'utilisation des écrans LCD
     """
-    def __init__(self):
-        self.lcd = CharLCD('PCF8574',0x27)
+    def __init__(self, adr):
+        """
+        adr : adresse : 0x27 ou 0x26
+        """
+        self.lcd = CharLCD('PCF8574',adr)
         self.lcd.clear()
         
     def printString(self, char):
