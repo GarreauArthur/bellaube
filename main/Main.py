@@ -2,12 +2,12 @@
 import sys
 sys.path[:0] = ['../data']
 from time import sleep
-import Horloge
-import Alarme
-import Horloge
-import Reglages
-import RPi.GPIO as GPIO
-from RPLCD import CharLCD
+from ..data.Heure import Heure
+from ..data.Alarme import Alarme
+from ..data.Horloge import Horloge
+from ..data.Reglages import Reglages
+#import RPi.GPIO as GPIO
+from ..data.Musique import Musique
 
 def main():
     '''Instanciation Variables globales'''

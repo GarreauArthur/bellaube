@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 from time import sleep
-from Heure import Heure
+from .Heure import Heure
 
 class Horloge:
 	"""
@@ -42,3 +42,10 @@ class Horloge:
 			self.heure.setHeures(0)
 		else:
 			self.heure.setHeures(h)
+
+if __name__== '__main__':
+	h = Horloge();
+	while 1 :
+		print(h.now())
+		h.tictac()
+		sleep(1)

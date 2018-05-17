@@ -43,6 +43,53 @@ quelqu'un est en train de modifier (sauf si vous connaissez bien git).
 5. Envoyez vos modifs sur le serveur github : `git push`
 6. Entrez votre nom d'utilisateur et mot de passe pour confirmer
 
+### Travailler avec les issues
+
+Les issues github donnent un moyen pratique de définir les taches à effectuer
+et de répartir le travail. Pour voir la liste des issues, il faut ce rendre
+sur l'onglet des [issues](https://github.com/GarreauArthur/bellaube/issues).
+
+#### Créer une nouvelle issue
+
+Sur cette [page](https://github.com/GarreauArthur/bellaube/issues) pour créer
+une nouvelle issue, il faut appuyer sur le bouton
+vert `New issue`, il faut ensuite ajouter un titre (ce qu'il faut faire),
+compléter si besoin en ajoutant une description. L'ajout de labels aide à
+classer les issues :
+
+* [équipe : LUMIERE|SOFT|SON] : pour répartir le travail dans les différentes
+équipes
+* bug, question, ...
+
+Vous pouvez assigner le travail à quelqu'un en cliquant sur `Assignees` à la
+droite du titre.
+
+#### Fermer une issue
+
+Lorsqu'une issue est terminée/résolue, on peut la fermer directement lorsqu'on
+fait un commit, si le message du commit contient un mot-clé dans la liste
+suivante suivi du numéro de l'issue
+
+* close, closes, closed
+* fix, fixes, fixed
+* resolve, resolves, resolved
+
+exemples :
+
+  "Closes #123"
+  git commit -m "Closes #3"
+
+### Lancer script
+
+Pour exécuter un script il faut se placer dans le dossier contenant le dossier
+`bellaube` et utiliser la syntaxe suivante :
+
+	python -m bellaube.[package.[subpackage.]...]module
+
+exemples :
+
+	python -m bellaube.main.Main
+	python -m bellaube.data.Horloge
 
 ## Version longue
 
