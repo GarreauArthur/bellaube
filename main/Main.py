@@ -1,6 +1,4 @@
 #-*- coding: utf-8 -*-
-import sys
-sys.path[:0] = ['../data']
 from time import sleep
 from ..data.Heure import Heure
 from ..data.Alarme import Alarme
