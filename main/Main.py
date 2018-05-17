@@ -1,10 +1,13 @@
 #-*- coding: utf-8 -*-
+import sys
+sys.path[:0] = ['../data']
 from time import sleep
-from Heure import Heure
-from Alarme import Alarme
-from Horloge import Horloge
-from Reglages import Reglages
+import Horloge
+import Alarme
+import Horloge
+import Reglages
 import RPi.GPIO as GPIO
+from RPLCD import CharLCD
 
 def main():
     '''Instanciation Variables globales'''

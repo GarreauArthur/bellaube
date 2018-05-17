@@ -3,11 +3,11 @@ from Heure import Heure
 
 class Alarme:
     """
-    Structure de données permettant de représenter une alarme :
-    * heure de l'alarme
-    * etat : ON/OFF
-    * son : etat, choix de la musique et du volume
-    * aube : etat, durée, intensité
+    Structure de donnees permettant de representer une alarme :
+     *heure de l'alarme
+     *etat : ON/OFF
+     *son : etat, choix de la musique et du volume
+     *aube : etat, duree, intensite
     
     """
 
@@ -63,6 +63,6 @@ class Alarme:
         self.heure.setMinutes(m)
 
     def setAlarme(self, a):
-        """a doit être un objet de type Heure
+        """a doit etre un objet de type Heure
         """
         self.heure = a
