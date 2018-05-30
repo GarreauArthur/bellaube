@@ -1,10 +1,11 @@
+#-*- coding: utf-8 -*-
 class MoletteProcedure:
    cpt = 0
    cpt_prec = cpt
    '''Compteur vertical'''
-   j = 0
+   j = 0 
    '''Position'''
-   positionMolette = 5
+   positionMolette = 5 
 
    def __init__(self):
       '''Menus de départ, sera peut-être en réalité une liste d'objets Menu'''
@@ -13,18 +14,22 @@ class MoletteProcedure:
 
    def setListeMenu(self,liste):
       self.listeMenu = liste
-
+   
    def prcsss(self):
       while(1):
          MoletteProcedure.cpt = MoletteProcedure.positionMolette
          menuCourant = self.listeMenu[MoletteProcedure.j]
          intervalle = MoletteProcedure.cpt-MoletteProcedure.cpt_prec
-         if MoletteProcedure.j == len(self.listeMenu):
-            MoletteProcedure.j = 0
-         elif intervalle<0 and abs(intervalle)>1:
-            MoletteProcedure.j = MoletteProcedure.j-1
+         if intervalle<0 and abs(intervalle)>1:
+            if MoletteProcedure.j == 0:
+               MoletteProcedure.j = len(self.listeMenu)
+            else:
+               MoletteProcedure.j = MoletteProcedure.j-1
          elif intervalle>0 and abs(intervalle)>1:
-            MoletteProcedure.j = MoletteProcedure.j+1
+            if MoletteProcedure.j == len(self.listeMenu):
+               MoletteProcedure.j = 0
+            else:
+               MoletteProcedure.j = MoletteProcedure.j+1
          '''Fonction afficher à définir dans une classe Menu ou ailleurs'''
          self.listeMenu[MoletteProcedure.j].afficher()
 
