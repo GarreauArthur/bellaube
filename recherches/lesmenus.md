@@ -28,7 +28,7 @@ Ici, je déclare l'ensemble des menus et sous-menus
 					* échelle [0, 1, 3, 1, 0-à-100]
 				* Intensité [0, 1, 3, 2, 0]
 					* échelle [0, 1, 3, 2, 0-à-100]
-		* Lumiere [0, 2, 0, 0, 0,]
+		* Lumiere [0, 2, 0, 0, 0]
 			* échelle intensité [0, 2, 0-à-100, 0, 0]
 		* Bluetooth [0, 3, 0, 0, 0]
 			* activer/désactiver [0, 3, 0, 0, 0]
@@ -39,3 +39,47 @@ Ici, je déclare l'ensemble des menus et sous-menus
 		* précendete [1, 3, 0, 0, 0]
 		* volume [1, 4, 0, 0, 0]
 	* Ecran Lampe [2, 0, 0, 0, 0]
+
+
+## Valeurs max
+
+On veut pouvoir naviguer dans les menus en bouclant, au dernier sous-menu du
+menu, on recommence au premier... Du coup on a besoin de connaître le nombre de
+sous-menus par menu. On peut faire une table de hash.
+
+//PARTIE à finir (avec regarder les ancêtres ...)
+
+|         Menus         | Nombre de sous-menus |
+|-----------------------|----------------------|
+| [0, 0, 0, 0, 0]       |           3          |
+| [0, 0, 0, 0, 0]       |           1          |
+| [0, 1, 0, 0, 0]       |           4          |
+| [0, 1, 0, 0, 0]       |                     |
+| [0, 1, 1, 0, 0]       |                     |
+| [0, 1, 2, 0, 0]       |                     |
+| [0, 1, 2, 0, 0]       |          101         |
+| [0, 1, 2, 1, 0]       |                     |
+| [0, 1, 2, 1, 0-à-100] |                     |
+| [0, 1, 3, 0, 0]       |                     |
+| [0, 1, 3, 0, 0]       |                     |
+| [0, 1, 3, 1, 0]       |                     |
+| [0, 1, 3, 1, 0-à-100] |                     |
+| [0, 1, 3, 2, 0]       |                     |
+| [0, 1, 3, 2, 0-à-100] |                     |
+| [0, 2, 0, 0, 0]       |                     |
+| [0, 2, 0-à-100, 0, 0] |                     |
+| [0, 3, 0, 0, 0]       |                     |
+| [0, 3, 0, 0, 0]       |                     |
+| [1, 0, 0, 0, 0]       |                     |
+| [1, 0, 0, 0, 0]       |                     |
+| [1, 1, 0, 0, 0]       |                     |
+| [1, 2, 0, 0, 0]       |                     |
+| [1, 3, 0, 0, 0]       |                     |
+| [1, 4, 0, 0, 0]       |                     |
+| [2, 0, 0, 0, 0]       |                     |
+
+
+
+
+
+
