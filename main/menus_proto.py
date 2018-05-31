@@ -13,6 +13,32 @@ compteur_prec = 0
 compteur += molette_1
 INTERVALLE_CHANGEMENT = 1 # permet de diminuer la sensibilité du codeur
 
+
+
+"""
+Gestion de l'appui sur le bouton
+"""
+# set up as input
+# pulled up to avoid false detection
+# fallinf edge detection
+#GPIO.setmode(IO.BOARD)
+GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_UP)#GPIO22
+
+def Valider(channel):
+   global profondeur
+   if profondeur < 4 :
+      profondeur += 1
+   else:
+      profondeur -= 1
+
+GPIO.add_event_detect(15, GPIO.FALLING, callback=callbackkk, bouncetime=300)
+
+
+
+
+
+
+
 """
 On pourrait peut être faire une distinction entre le compteur du codeur, et le
 compteur du sous-menus, comme ça on peut gérer la sensibilité de la molette
@@ -32,22 +58,6 @@ while(1):
       menus[profondeur] += 1;
    compteur_prec = compteur
    print(menus)
-
-
-
-   intervalle = MoletteProcedure.cpt-MoletteProcedure.cpt_prec
-   if intervalle<0 and abs(intervalle)>1:
-      if MoletteProcedure.j == 0:
-         MoletteProcedure.j = len(self.listeMenu)
-      else:
-         MoletteProcedure.j = MoletteProcedure.j-1
-   elif intervalle>0 and abs(intervalle)>1:
-      if MoletteProcedure.j == len(self.listeMenu):
-         MoletteProcedure.j = 0
-      else:
-         MoletteProcedure.j = MoletteProcedure.j+1
-   '''Fonction afficher à définir dans une classe Menu ou ailleurs'''
-   self.listeMenu[MoletteProcedure.j].afficher()
 
 
 

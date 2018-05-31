@@ -40,7 +40,7 @@ class BasicEncoder:
         self.a_pin = a_pin
         self.b_pin = b_pin
 
-        IO.setmode(IO.BCM)
+        IO.setmode(IO.BOARD)
         IO.setup(self.a_pin, IO.IN, pull_up_down=IO.PUD_UP)
         IO.setup(self.b_pin, IO.IN, pull_up_down=IO.PUD_UP)
 
