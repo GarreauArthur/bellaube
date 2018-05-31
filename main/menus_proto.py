@@ -1,6 +1,7 @@
 #------------------------------------------------------------------------------
 #-*- coding: utf-8 -*-
 from Molette import *
+import RPi.GPIO as GPIO
 
 # création d'un objet molette
 molette_1 = BasicEncoder(11,13)
@@ -10,8 +11,7 @@ menus = [0, 0, 0, 0, 0]
 profondeur = 0 # profondeur
 compteur = 0 # stocke les infos de rotations de la molette
 compteur_prec = 0
-compteur += molette_1
-INTERVALLE_CHANGEMENT = 1 # permet de diminuer la sensibilité du codeur
+INTERVALLE_CHANGEMENT = 4 # permet de diminuer la sensibilité du codeur
 
 
 
@@ -29,9 +29,9 @@ def Valider(channel):
    if profondeur < 4 :
       profondeur += 1
    else:
-      profondeur -= 1
+      profondeur = 0
 
-GPIO.add_event_detect(15, GPIO.FALLING, callback=callbackkk, bouncetime=300)
+GPIO.add_event_detect(15, GPIO.FALLING, callback=Valider, bouncetime=300)
 
 
 
