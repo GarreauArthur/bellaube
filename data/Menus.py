@@ -8,13 +8,6 @@ On veut connaître le nombre de menus/valeurs au même niveau que menu,
 on va donc s'intéresser aux ancêtres.
 On récupère les ancêtres et on associe cette valeur au nombre de sous-menus
 
-On prend ce qu'il y a dans l'intervalle [0:profondeur-1] en python [:profondeur]
-faire attention au cas ou profondeur est égal à 0, on donnera directement le
-nombre de sous-menus dans soucier du dictionnaire
-
-
-
-
 Lorsqu'on utilise la molette, on a une valeur de `menus` comme ça :
 
   menus = [ancêtres|raw_val|0, 0, ...]
@@ -24,9 +17,9 @@ conditions, on propose de convertir menus en une chaîne de caractères uniques 
 Pour cela, on va faire VersChaine(profondeur + menus)
 
 Il faut être capable également de restreindre raw_val à un intervalle
-[0,nombre_de_sous_menus[, pour obtenir un valeur propre sous_menus.
+[0,nombre_de_sous_menus[, pour obtenir une valeur propre sous_menus.
 
-Pour connaître nombre_de_sous_menus, on utilise ancètres. A chaque séquence
+Pour connaître nombre_de_sous_menus, on utilise ancêtres. A chaque séquence
 d'ancêtres, on associe le nombre de sous-menus. On va utiliser un dictionnaire
 pour ça.
 
@@ -42,19 +35,16 @@ pour ça.
    |
   (6) VersChaine(profondeur,ancetres,sous_menus)
 
-Faire attention à gérer le cas où profondeur est égal à zéro, i.e. quand il n'y
-a pas d'ancêtres.
 Lorsqu'on modifie une échelle de 0-à-100, il faut utiliser une variante de (5)
 
 
 
 """
-NOMBRE_SOUS_MENUS_PRINCIPAUX = 3
-
 
 TOUS_LES_NOMBRES_DE_SOUS_MENUS = {
   ""  : 3, #menu principal
   "0" : 4,
   "00": "1440",#gestion spéciale
+  "01":4,
 }
 
