@@ -42,9 +42,26 @@ Lorsqu'on modifie une échelle de 0-à-100, il faut utiliser une variante de (5)
 """
 
 TOUS_LES_NOMBRES_DE_SOUS_MENUS = {
-  ""  : 3, #menu principal
-  "0" : 4,
-  "00": "1440",#gestion spéciale
-  "01":4,
+  ""      :    3, #menu principal
+  "0"     :    4,
+  "00"    : 1440,#gestion spéciale
+  "01"    :    4,
+  "010"   :    1,
+  "011"   : 1440,
+  "012"   :    2,
+  "0120"  :  101,
+  "0121"  :  101,
+  "013"   :    3,
+  "0130"  :    1,
+  "0131"  :  101,
+  "0132"  :  101,
+  "02"    :  101,
+  "03"    :    1,
+  "030"   :    1,
+  "1"     :    5,
+  "14"    :  101,
+  "2"     :    2,
+  "20"    :    1,
+  "21"    :   101
 }
 
