@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 """
 L'idée ici est de définir le nombre de sous-menus de chaque menu.
 Je pense que je vais créer un dictionnaire, tout simple

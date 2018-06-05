@@ -2,6 +2,7 @@
 #-*- coding: utf-8 -*-
 from Molette import *
 import RPi.GPIO as GPIO
+from ..data.Menus import *
 
 # création d'un objet molette
 molette_1 = BasicEncoder(11,13)
@@ -29,17 +30,26 @@ def Valider(channel):
    ancetres_str = "".join(str(a) for a in menus[:profondeur])
    
    if ancetres_str == "00":
+      pass
    elif ancetres_str == "011":
+      pass
    elif ancetres_str == "0120":
+      pass
    elif ancetres_str == "0121":
+      pass
    elif ancetres_str == "0131":
+      pass
    elif ancetres_str == "0132":
+      pass
    elif ancetres_str == "12":
+      pass
    elif ancetres_str == "21":
+      pass
    else:
       if profondeur < 4 :
          profondeur += 1
-         menu_str = ancetres_str + str(menus[profondeur])
+         menu_str = "".join(str(b) for b in menus[:profondeur+1])
+         print("---------------------------")
          print(MENUS_AFFICHAGE[menu_str])
 
 GPIO.add_event_detect(15, GPIO.FALLING, callback=Valider, bouncetime=300)
@@ -76,12 +86,14 @@ while(1):
       if menus[profondeur] < 0 :
          menus[profondeur] = 0
       elif menus[profondeur] > 100 :
-         menus[profonder] = 100
+         menus[profondeur] = 100
       print(menus[profondeur])
    elif nb_sous_menus == 1440 : # si une heure
-      heures = val//60
-      minutes = val % 60 
-      print(heures + ":" + minutes)
+      heures = menus[profondeur]//60
+      minutes = menus[profondeur] % 60 
+      heures = max(0,min(23, heures))
+      minutes = max(0,min(59, minutes))
+      print(str(heures) + ":" + str(minutes))
    else: # si menu normal
       menus[profondeur] = menus[profondeur]%nb_sous_menus
       menus_str = "".join(str(a) for a in menus[:profondeur+1])
