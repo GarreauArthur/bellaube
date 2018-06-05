@@ -57,11 +57,47 @@ TOUS_LES_NOMBRES_DE_SOUS_MENUS = {
   "0132"  :  101,
   "02"    :  101,
   "03"    :    1,
-  "030"   :    1,
   "1"     :    5,
-  "14"    :  101,
+  "12"    :  101,
   "2"     :    2,
   "20"    :    1,
   "21"    :   101
 }
+
+
+MENUS_AFFICHAGE = {
+  ""      : "Defaut",
+  "0"     : "Configuration",
+  "00"    : "Heure",
+  "000"   : "modification_de_l'heure",
+  "01"    : "Alarme",
+  "010"   : "Alarme_Activer/Désactiver",
+  "011"   : "Régler_alarme",
+  "0110"  : "réglage_heure_de_l'alarme",
+  "012"   : "Choix_alarme_sonore",
+  "0120"  : "liste_de_musique",
+  "01200" : "chansons",
+  "0121"  : "volume",
+  "01210" : "degré_volume",
+  "013"   : "config_Aube",
+  "0130"  : "Aube_Activer/Désactiver",
+  "0131"  : "Durée",
+  "01310" : "échelle_durée",
+  "0132"  : "Intensité",
+  "01320" : "échelle_intensité_aube",
+  "02"    : "Lumière",
+  "020"   : "échelle_intensité_lumière",
+  "03"    : "Bluetooth",
+  "030"   : "activer/désactiver",
+  "1"     : "Musique",
+  "10"    : "choix_musique",
+  "11"    : "play/pause",
+  "12"    : "volume",
+  "120"   : "échelle_volume",
+  "2"     : "Lampe",
+  "20"    : "Allumer/éteindre",
+  "21"    : "Intensité",
+  "210"   : "échelle_intensité"
+}
+
 
