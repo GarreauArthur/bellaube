@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 from time import sleep
-from .Heure import Heure
+from Heure import Heure
 
 class Horloge:
 	"""
