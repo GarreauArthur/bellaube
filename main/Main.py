@@ -34,7 +34,13 @@ reglages.addAlarme(alarme)
 #     menus, valider
 #     retour
 #     eteindre alarme
-
+#-------------------------- gestion de threads ---------------------------------
+#     reveil
+def reveiller():
+    global reglages, aube, son
+    al = reglages.getAlarmes()[0] # on récupère l'objet alarme
+    # gestion de l'aube
+    # gestion du son
 #--------------------------------BOUCLE-PRINCIPALE------------------------------
 
 while(1):

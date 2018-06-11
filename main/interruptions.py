@@ -13,11 +13,11 @@ ecran = EcranLCD()
 
 def callbackkk(channel):
   if random.randint(0,10) < 5:
-    ecran.printString("MEGA FAGGOT")
+    ecran.printString("yes")
   else:
     ecran.printString("Nope")
 
-ecran.printString("R u A FAGoT")
+ecran.printString("r u ok")
 
 GPIO.add_event_detect(17, GPIO.FALLING, callback=callbackkk, bouncetime=300)
 
