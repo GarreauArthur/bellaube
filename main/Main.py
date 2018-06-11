@@ -7,7 +7,7 @@ from ..data.Reglages import Reglages
 import RPi.GPIO as GPIO
 from ..data.Musique import Musique
 from ..data.ConstantePin import *
-
+import _thread
 
 
 #---------------------------------INITIALISATION--------------------------------
@@ -17,38 +17,37 @@ from ..data.ConstantePin import *
 GPIO.setmode(IO.BOARD)
 
 # Instanciation Variables globales
-horloge = Horloge()
+## Materiel
+aube = Aube() # l'aube
+son = Son() # le son
+ecran_h = EcranLCD() # ecran horloge 
+ecran_r = EcranLCD() # ecran réglages
+## Logiciel
 alarme = Alarme()
+alarme.setHeuresAlarme(7) # on met l'alarme par défaut à 7 heure
 musique = Musique()
 reglages = Reglages()
 reglages.addAlarme(alarme)
-# gestion des interruptions
+
+
+#----------------------- gestion des interruptions -----------------------------
 #     menus, valider
 #     retour
 #     eteindre alarme
 
 #--------------------------------BOUCLE-PRINCIPALE------------------------------
 
-def main():
-    '''Instanciation Variables globales'''
+while(1):
 
-    '''Sauvegarde des données'''
-
-    '''Initialisation'''
-	
-    '''Cœur du programme : 
-    	while(1):
-		gestion des threads
-        	mise à jour horloge
-		heure horloge == heure alarme ?
-			déclencher réveil
- 
-    '''
-
-    
-    
-    
-if __name__== '__main__':
-    main() 
+    reglages.getHorloge().tictac()
+    # pour l'instant on suppose qu'il y a toujours au moins une alarme
+    if reglages.getAlarmes()[0].getEtat() == Alarme.ON :
+        if reglages.getAlarmes()[0].getAlarme() == reglages.getHorloge() :
+            # déclencher le réveil dans un autre thread
+            try:
+                _thread.start_new_thread(reveiller,())
+            except:
+                print("bon bah désolé, l'utilisateur ne sera pas réveillé")
+    sleep(1)#on attend un seconde
 
 
