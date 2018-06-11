@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from .Heure import Heure
 
 
@@ -14,7 +15,8 @@ class Alarme:
     ON = 1
     OFF = 0
     def __init__(self):
-        self.heure = Heure();
+        self.etat = Alarme.OFF # alarme activée ou désactivée ?
+        self.heure = Heure()
         self.son = {
             "etat" : Alarme.OFF,
             "musique" : "",
@@ -52,6 +54,15 @@ class Alarme:
 
     #--------------------------
     # ALARME
+    def setEtat(self, e):
+        """
+            e doit être Alarme.ON ou Alarme.OFF
+        """
+        self.etat = e
+
+    def getEtat(self):
+        return self.etat
+
     def setHeuresAlarme(self,h):
         self.heure.setHeures(h)
 
@@ -66,6 +77,9 @@ class Alarme:
         """a doit etre un objet de type Heure
         """
         self.heure = a
+
+    def getAlarme(self):
+        return self.heure
 
 if __name__ == '__main__':
     a = Alarme()
