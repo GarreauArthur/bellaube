@@ -50,6 +50,63 @@ def reveiller():
     al = reglages.getAlarmes()[0] # on récupère l'objet alarme
     # gestion de l'aube
     # gestion du son
+#-------------------------Gestion de l'appui sur le bouton---------------------
+# set up as input
+# pulled up to avoid false detection
+# fallinf edge detection
+#GPIO.setmode(IO.BOARD)
+GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_UP)#GPIO22
+
+def Valider(channel):
+   global profondeur, reglages, menus
+   ancetres_str = "".join(str(a) for a in menus[:profondeur])
+   
+   if ancetres_str == "00":
+      #Réglage de l'heure
+      heures = menus[profondeur]//60
+      minutes = menus[profondeur] % 60 
+      heures = max(0,min(23, heures))
+      minutes = max(0,min(59, minutes))
+      reglage.horloge.setHeures(heures)
+      reglage.horloge.setMinutes(minutes)
+   elif ancetres_str == "011":
+      #Réglage de l'heure de l'alarme
+      heures = menus[profondeur]//60
+      minutes = menus[profondeur] % 60 
+      heures = max(0,min(23, heures))
+      minutes = max(0,min(59, minutes))
+      reglages.getAlarmes()[0].setHeuresAlarme(heures)
+      reglages.getAlarmes()[0].setMinutesAlarme(minutes)
+   elif ancetres_str == "0120":
+      #Changer chanson alarme 
+        
+   elif ancetres_str == "0121":
+      #Réglage volume alarme
+      reglages.getAlarmes()[0].setSonVolume(menus[profondeur])
+   elif ancetres_str == "0131":
+      #Réglage durée aube
+   elif ancetres_str == "0132":
+      #Réglage intensité aube
+      intensite = max(0,min(100,menus[profondeur])
+      reglages.getAlarmes()[0].setAubeIntensite(menus[profondeur])
+      #aube.setIntensite(menus[profondeur])
+   elif ancetres_str == "12":
+      #Réglage volume musique
+      volume = max(0,min(100, menus[profondeur])
+      reglage.setVolume(volume)      
+   elif ancetres_str == "21":
+      #Réglage intensité écran lampe
+      intensite = max(0,min(100,menus[profondeur])
+      reglages.getAlarmes()[0].setAubeIntensite(menus[profondeur])
+   else:
+      if profondeur < 4 :
+         profondeur += 1
+         menu_str = "".join(str(b) for b in menus[:profondeur+1])
+         print("---------------------------")
+         print(MENUS_AFFICHAGE[menu_str])
+
+GPIO.add_event_detect(15, GPIO.FALLING, callback=Valider, bouncetime=300)
+
 #--------------------------------BOUCLE-PRINCIPALE------------------------------
 
 while(1):
