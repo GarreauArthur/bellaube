@@ -64,39 +64,53 @@ def Valider(channel):
    if ancetres_str == "00":
       #Réglage de l'heure
       heures = menus[profondeur]//60
-      minutes = menus[profondeur] % 60 
+      minutes = menus[profondeur] % 60
       heures = max(0,min(23, heures))
       minutes = max(0,min(59, minutes))
       reglage.horloge.setHeures(heures)
       reglage.horloge.setMinutes(minutes)
+   elif ancetres_str == "010": #activer/desactiver alarme
+      etat = reglages.getAlarmes()[0].getEtat()
+      etat = Alarme.ON if etat == Alarme.OFF else Alarme.OFF
+      reglages.getAlarmes()[0].setEtat(etat)
+      print("ON" if Alarme.ON else "OFF")
    elif ancetres_str == "011":
       #Réglage de l'heure de l'alarme
       heures = menus[profondeur]//60
-      minutes = menus[profondeur] % 60 
+      minutes = menus[profondeur] % 60
       heures = max(0,min(23, heures))
       minutes = max(0,min(59, minutes))
       reglages.getAlarmes()[0].setHeuresAlarme(heures)
       reglages.getAlarmes()[0].setMinutesAlarme(minutes)
    elif ancetres_str == "0120":
-      #Changer chanson alarme 
-        
+      #Changer chanson alarme
+      pass
    elif ancetres_str == "0121":
       #Réglage volume alarme
-      reglages.getAlarmes()[0].setSonVolume(menus[profondeur])
+      volume = max(0,min(100, menus[profondeur]))
+      reglages.getAlarmes()[0].setSonVolume(volume)
+   elif ancetres_str == "0130": # activer désactiver aube
+      etat = reglages.getAlarmes()[0].getAubeEtat()
+      etat = Alarme.ON if etat == Alarme.OFF else Alarme.OFF
+      reglages.getAlarmes()[0].setAubeEtat(etat)
    elif ancetres_str == "0131":
       #Réglage durée aube
+      delta = min(500,menus[profondeur]) # limite arbitraire
+      reglages.getAlarmes()[0].setAubeDuree(delta)
    elif ancetres_str == "0132":
       #Réglage intensité aube
-      intensite = max(0,min(100,menus[profondeur])
+      intensite = max(0,min(100,menus[profondeur]))
       reglages.getAlarmes()[0].setAubeIntensite(menus[profondeur])
       #aube.setIntensite(menus[profondeur])
+   elif ancetres_str == "03": #activer/désactiver bluetooth
+      pass
    elif ancetres_str == "12":
       #Réglage volume musique
-      volume = max(0,min(100, menus[profondeur])
-      reglage.setVolume(volume)      
+      volume = max(0,min(100, menus[profondeur]))
+      reglage.setVolume(volume)
    elif ancetres_str == "21":
       #Réglage intensité écran lampe
-      intensite = max(0,min(100,menus[profondeur])
+      intensite = max(0,min(100,menus[profondeur]))
       reglages.getAlarmes()[0].setAubeIntensite(menus[profondeur])
    else:
       if profondeur < 4 :
