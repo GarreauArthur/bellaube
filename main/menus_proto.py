@@ -3,6 +3,7 @@
 from Molette import *
 import RPi.GPIO as GPIO
 from ..data.Menus import *
+from ..data.ConstantePin import *
 
 # création d'un objet molette
 molette_1 = BasicEncoder(11,13)
@@ -56,10 +57,21 @@ GPIO.add_event_detect(15, GPIO.FALLING, callback=Valider, bouncetime=300)
 
 
 
+"""
+BOUTON RETOUR
+"""
+GPIO.setup(BOUTON_RETOUR, GPIO.IN, pull_up_down=GPIO.PUD_UP)#33
 
+def Retour(channel):
+   global profondeur
+   if profondeur > 0:
+      profondeur -= 1
+      #modifier l'affichage
+      menu_str = "".join(str(b) for b in menus[:profondeur+1])
+      print("---------------------------")
+      print(MENUS_AFFICHAGE[menu_str])
 
-
-
+GPIO.add_event_detect(ConstantePin.BOUTON_RETOUR, GPIO.FALLING, callback=Retour, bouncetime=300)
 """
 On pourrait peut être faire une distinction entre le compteur du codeur, et le
 compteur du sous-menus, comme ça on peut gérer la sensibilité de la molette
