@@ -20,8 +20,8 @@ GPIO.setmode(IO.BOARD)
 ## Materiel
 aube = Aube() # l'aube
 son = Son() # le son
-ecran_h = EcranLCD() # ecran horloge 
-ecran_r = EcranLCD() # ecran réglages
+ecran_h = EcranLCD(0x26) # ecran horloge 
+ecran_r = EcranLCD(0x27) # ecran réglages
 ## Logiciel
 alarme = Alarme()
 alarme.setHeuresAlarme(7) # on met l'alarme par défaut à 7 heure
