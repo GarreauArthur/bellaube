@@ -71,7 +71,7 @@ def Retour(channel):
       print("---------------------------")
       print(MENUS_AFFICHAGE[menu_str])
 
-GPIO.add_event_detect(ConstantePin.BOUTON_RETOUR, GPIO.FALLING, callback=Retour, bouncetime=300)
+GPIO.add_event_detect(BOUTON_RETOUR, GPIO.FALLING, callback=Retour, bouncetime=300)
 """
 On pourrait peut être faire une distinction entre le compteur du codeur, et le
 compteur du sous-menus, comme ça on peut gérer la sensibilité de la molette
