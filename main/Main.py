@@ -20,14 +20,23 @@ GPIO.setmode(IO.BOARD)
 ## Materiel
 aube = Aube() # l'aube
 son = Son() # le son
-ecran_h = EcranLCD(0x26) # ecran horloge 
-ecran_r = EcranLCD(0x27) # ecran réglages
+ecran_h = EcranLCD(ECRAN_HORLOGE_PIN) # ecran horloge 
+ecran_r = EcranLCD(ECRAN_REGLAGE_PIN) # ecran réglages
 ## Logiciel
 alarme = Alarme()
 alarme.setHeuresAlarme(7) # on met l'alarme par défaut à 7 heure
 musique = Musique()
 reglages = Reglages()
 reglages.addAlarme(alarme)
+## Logiciel : menus
+molette_1 = BasicEncoder(MOLETTE_1_PIN_1,MOLETTE_1_PIN_2)
+menus = [0, 0, 0, 0, 0]
+profondeur = 0 # profondeur
+compteur = 0 # stocke les infos de rotations de la molette
+compteur_prec = 0
+INTERVALLE_CHANGEMENT = 4 # permet de diminuer la sensibilité du codeur
+##Logiciel : volume/intensité
+molette_2 = BasicEncoder(MOLETTE_2_PIN_1,MOLETTE_2_PIN_2)
 
 
 #----------------------- gestion des interruptions -----------------------------
