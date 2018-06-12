@@ -14,6 +14,8 @@ class Reglages:
   def __init__(self):
     self.horloge = Horloge()
     self.alarmes = []
+    self.volume = 0
+    self.intensite = 0
     
 #---------------ACCESSEURS-et-MUTATEUR-----------------------------------------
 
@@ -23,6 +25,18 @@ class Reglages:
   def setAlarmes(self, al):
     self.alarmes = al
 
+  def setVolume(self,v):
+    self.volume = v
+  
+  def setIntensite(self,i):
+    self.intensite = i
+    
+  def getIntensite(self)
+    return self.intensite
+  
+  def getVolume(self):
+    return self.volume
+  
   def getHorloge(self):
     return self.horloge
 
