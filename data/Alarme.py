@@ -46,6 +46,9 @@ class Alarme:
     def setAubeEtat(self,e):
         self.aube["etat"] = e
 
+    def getAubeEtat(self):
+        return self.aube["etat"]
+
     def setAubeDuree(self,d):
         self.aube["duree"] = d
 
