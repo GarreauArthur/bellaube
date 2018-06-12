@@ -69,6 +69,7 @@ def Valider(channel):
       minutes = max(0,min(59, minutes))
       reglage.horloge.setHeures(heures)
       reglage.horloge.setMinutes(minutes)
+      reglage.horloge.setSecondes(0)
    elif ancetres_str == "010": #activer/desactiver alarme
       etat = reglages.getAlarmes()[0].getEtat()
       etat = Alarme.ON if etat == Alarme.OFF else Alarme.OFF
