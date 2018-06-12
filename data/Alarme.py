@@ -34,11 +34,20 @@ class Alarme:
     def setSonEtat(self, e):
         self.son["etat"] = e
 
+    def getSonEtat(self):
+        return self.son["etat"]
+
     def setSonMusique(self,m):
         self.son["musique"] = m
+    
+    def getSonMusique(self):
+        return self.son["musique"]
 
     def setSonVolume(self,v):
         self.son["volume"] = v
+
+    def getSonVolume(self):
+        return self.son["volume"]
 
     #--------------------------
     # AUBE
@@ -52,8 +61,14 @@ class Alarme:
     def setAubeDuree(self,d):
         self.aube["duree"] = d
 
+    def getAubeDuree(self,d):
+        return self.aube["duree"]
+
     def setAubeIntensite(self,i):
         self.aube["intensite"] = i
+
+    def getAubeIntensite(self):
+        return self.aube["intensite"]
 
     #--------------------------
     # ALARME
@@ -69,8 +84,14 @@ class Alarme:
     def setHeuresAlarme(self,h):
         self.heure.setHeures(h)
 
+    def getHeuresAlarme(self):
+        return self.heure.getHeures()
+
     def setMinutesAlarme(self,m):
         self.heure.setMinutes(m)
+
+    def getMinutesAlarme(self):
+        self.heure.getMinutes(m)
 
     def setHeuresEtMinutesAlarme(self,h,m):
         self.heure.setHeures(h)
