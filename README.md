@@ -81,6 +81,8 @@ exemples :
 
 ### Lancer script
 
+	sudo python3 -m bellaube.main.Main.py
+
 Pour exécuter un script il faut se placer dans le dossier contenant le dossier
 `bellaube` et utiliser la syntaxe suivante :
 
@@ -169,7 +171,7 @@ du programme, c'est une bonne idée d'indiquer comment les installer ici.
 (C'est surement pas la meilleure façon de faire ça, mais au moins c'est facile)
 
 	# à vérifier parce que je ne m'en souviens plus
-	sudo pip install RPLCD
+	sudo pip3 install RPLCD
 	sudo apt-get install python-smbus
 	sudo apt-get install pigpio python-pigpio python3-pigpio
 	# fin à vérifier
