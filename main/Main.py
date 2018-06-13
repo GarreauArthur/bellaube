@@ -55,7 +55,7 @@ def reveiller():
 # pulled up to avoid false detection
 # fallinf edge detection
 #GPIO.setmode(IO.BOARD)
-GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_UP)#GPIO22
+GPIO.setup(BOUTON_VALIDER, GPIO.IN, pull_up_down=GPIO.PUD_UP)#GPIO22
 
 def Valider(channel):
    global profondeur, reglages, menus
@@ -94,25 +94,23 @@ def Valider(channel):
       etat = reglages.getAlarmes()[0].getAubeEtat()
       etat = Alarme.ON if etat == Alarme.OFF else Alarme.OFF
       reglages.getAlarmes()[0].setAubeEtat(etat)
-   elif ancetres_str == "0131":
-      #Réglage durée aube
+   elif ancetres_str == "0131":#Réglage durée aube
       delta = min(500,menus[profondeur]) # limite arbitraire
       reglages.getAlarmes()[0].setAubeDuree(delta)
-   elif ancetres_str == "0132":
-      #Réglage intensité aube
+   elif ancetres_str == "0132":#Réglage intensité aube
       intensite = max(0,min(100,menus[profondeur]))
-      reglages.getAlarmes()[0].setAubeIntensite(menus[profondeur])
-      #aube.setIntensite(menus[profondeur])
+      reglages.getAlarmes()[0].setAubeIntensite(intensite)
    elif ancetres_str == "03": #activer/désactiver bluetooth
       pass
-   elif ancetres_str == "12":
-      #Réglage volume musique
+   elif ancetres_str == "12":#Réglage volume musique
       volume = max(0,min(100, menus[profondeur]))
       reglage.setVolume(volume)
-   elif ancetres_str == "21":
-      #Réglage intensité écran lampe
-      intensite = max(0,min(100,menus[profondeur]))
-      reglages.getAlarmes()[0].setAubeIntensite(menus[profondeur])
+   elif ancetres_str == "20": # allumer/éteindre aube
+      etat = aube.getEtat()
+      etat = Aube.ON if etat == Aube.OFF else Aube.OFF
+      aube.setEtat(etat)
+   elif ancetres_str == "21":#Réglage intensité écran lampe
+      aube.setIntensite(menus[profondeur])
    else:
       if profondeur < 4 :
          profondeur += 1
