@@ -50,7 +50,7 @@ def Valider(channel):
       if profondeur < 4 :
          profondeur += 1
          menu_str = "".join(str(b) for b in menus[:profondeur+1])
-         print("---------------------------")
+         print("---------------------------"+menu_str)
          print(MENUS_AFFICHAGE[menu_str])
 
 GPIO.add_event_detect(15, GPIO.FALLING, callback=Valider, bouncetime=300)
