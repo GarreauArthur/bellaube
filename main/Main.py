@@ -8,6 +8,7 @@ import RPi.GPIO as GPIO
 from ..data.Musique import Musique
 from ..data.ConstantePin import *
 import _thread
+from threading import Thread
 
 
 #---------------------------------INITIALISATION--------------------------------
@@ -118,7 +119,48 @@ def Valider(channel):
          print("---------------------------")
          print(MENUS_AFFICHAGE[menu_str])
 
-GPIO.add_event_detect(15, GPIO.FALLING, callback=Valider, bouncetime=300)
+GPIO.add_event_detect(BOUTON_VALIDER, GPIO.FALLING, callback=Valider, bouncetime=300)
+
+#-----------------------------------THREAD MENUS--------------------------------
+
+class ThreadMenu(Thread):
+   
+   def run(self):
+      while(1):
+         # On prend la valeur du delta du codeur (+ ou -)
+         compteur += molette_1.get_delta()
+         intervalle = compteur - compteur_prec
+         if abs(intervalle) < INTERVALLE_CHANGEMENT :
+            continue
+         elif intervalle < 0 :
+            menus[profondeur] -= 1;
+         elif intervalle > 0 : # equivalent à un else tout seul
+            menus[profondeur] += 1;
+         compteur_prec = compteur
+         
+         ancetres = menus[:profondeur] # on récupère les ancetres
+         ancetres_str = "".join(str(e) for e in ancetres) # on les convertit en cc
+         nb_sous_menus = TOUS_LES_NOMBRES_DE_SOUS_MENUS[ancetres_str] # on récupère le nb menus
+         if nb_sous_menus == 101 : # si une echelle
+            if menus[profondeur] < 0 :
+               menus[profondeur] = 0
+            elif menus[profondeur] > 100 :
+               menus[profondeur] = 100
+            print(menus[profondeur])
+         elif nb_sous_menus == 1440 : # si une heure
+            heures = menus[profondeur]//60
+            minutes = menus[profondeur] % 60 
+            heures = max(0,min(23, heures))
+            minutes = max(0,min(59, minutes))
+            print(str(heures) + ":" + str(minutes))
+         else: # si menu normal
+            menus[profondeur] = menus[profondeur]%nb_sous_menus
+            menus_str = "".join(str(a) for a in menus[:profondeur+1])
+            print(MENUS_AFFICHAGE[menus_str])
+
+# LANCEMENT THREAD menu
+thread_menu = ThreadMenu()
+thread_menu.start()
 
 #--------------------------------BOUCLE-PRINCIPALE------------------------------
 
