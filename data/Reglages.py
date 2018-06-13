@@ -46,6 +46,6 @@ class Reglages:
 #--------------methodes utiles-------------------------------------------------
 
   def addAlarme(self,alarme):
-    self.alarme.append(alarme)
+    self.alarmes.append(alarme)
 
   
