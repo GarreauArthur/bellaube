@@ -3,6 +3,7 @@
 
 import time
 import RPi.GPIO as GPIO
+from ConstantePin import *
 
 class Aube:
 	"""
@@ -15,12 +16,11 @@ class Aube:
 	def __init__(self):
 		self.intensite = 0
 		self.etat = Aube.OFF
-		GPIO.setmode(GPIO.BOARD)
 		#BCM = numerotation avec les GPIO
 		#BOARD = numerotation avec les pins
-		GPIO.setup(12, GPIO.OUT)
+		GPIO.setup(PIN_GPIO_AUBE, GPIO.OUT)
 		#GPIO 18 - pin 12 en sortie
-		ledPWM = GPIO.PWM(12, 1000)
+		ledPWM = GPIO.PWM(PIN_GPIO_AUBE, 1000)
 		ledPWM.start(0)
 		eteindre()
 
@@ -117,10 +117,10 @@ class Aube:
 			while k < 0 or k > 100 :
 				print("Choisir l'intensité entre 0 et 100")
 				k = input()
-		   j = -1
+			j = -1
 			while j < 1 or j > 5 :
 				print("Choisir le temps de l'aube entre 1 et 5")
-				j = input() 
+				j = input()
 			aube(k,j)
 		elif choix == 5:
 			break
