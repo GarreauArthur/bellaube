@@ -4,6 +4,7 @@ from ..data.Heure import Heure
 from ..data.Alarme import Alarme
 from ..data.Horloge import Horloge
 from ..data.Reglages import Reglages
+from ..lumiere.Aube import Aube
 import RPi.GPIO as GPIO
 from ..data.Musique import Musique
 from ..data.ConstantePin import *
@@ -15,7 +16,7 @@ from threading import Thread
 
 
 # set mode des GPIOs
-GPIO.setmode(IO.BOARD)
+GPIO.setmode(GPIO.BOARD)
 
 # Instanciation Variables globales
 ## Materiel
