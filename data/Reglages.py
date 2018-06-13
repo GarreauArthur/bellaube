@@ -31,7 +31,7 @@ class Reglages:
   def setIntensite(self,i):
     self.intensite = i
     
-  def getIntensite(self)
+  def getIntensite(self):
     return self.intensite
   
   def getVolume(self):
