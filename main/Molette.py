@@ -181,13 +181,13 @@ def switch_demo():
         delta = encoder.get_delta()
         if delta!=0:
             value = value + delta
-            print "value", value
+            print("value"+ value)
 
         if encoder.get_upEvent():
-            print "up!"
+            print("up!")
 
         if encoder.get_downEvent():
-            print "down!"
+            print("down!")
 
 def rgb_demo():
     value = 0
@@ -208,15 +208,15 @@ def rgb_demo():
         delta = encoder.get_delta()
         if delta!=0:
             colors[index] = min(100, max(0, colors[index] + delta))
-            print "color", RGBEncoder.COLOR_NAMES[index], "value", colors[index]
+            print("color" + RGBEncoder.COLOR_NAMES[index]+"value"+ colors[index])
             encoder.set_color(index, colors[index])
 
         if encoder.get_upEvent():
-            print "up!"
+            print("up!")
             index = (index + 1) % 3
 
         if encoder.get_downEvent():
-            print "down!"
+            print("down!")
 
 if __name__ == "__main__":
     rgb_demo()
