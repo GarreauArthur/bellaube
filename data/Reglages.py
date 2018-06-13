@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from Horloge import *
+from .Horloge import *
 
 class Reglages:
   """
