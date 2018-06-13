@@ -5,16 +5,20 @@ from ..data.Alarme import Alarme
 from ..data.Horloge import Horloge
 from ..data.Reglages import Reglages
 from ..lumiere.Aube import Aube
+from ..son.Son import Son
 import RPi.GPIO as GPIO
 from ..data.Musique import Musique
 from ..data.ConstantePin import *
+from ..ecran.EcranLCD import EcranLCD
+from .Molette import BasicEncoder
+from ..data.Menus import *
 import _thread
 from threading import Thread
 
 
 #---------------------------------INITIALISATION--------------------------------
 
-
+GPIO.setwarnings(False)
 # set mode des GPIOs
 GPIO.setmode(GPIO.BOARD)
 
@@ -22,8 +26,8 @@ GPIO.setmode(GPIO.BOARD)
 ## Materiel
 aube = Aube() # l'aube
 son = Son() # le son
-ecran_h = EcranLCD(ECRAN_HORLOGE_PIN) # ecran horloge 
-ecran_r = EcranLCD(ECRAN_REGLAGE_PIN) # ecran réglages
+#ecran_h = EcranLCD(ECRAN_HORLOGE_PIN) # ecran horloge 
+#ecran_r = EcranLCD(ECRAN_REGLAGE_PIN) # ecran réglages
 ## Logiciel
 alarme = Alarme()
 alarme.setHeuresAlarme(7) # on met l'alarme par défaut à 7 heure
@@ -69,9 +73,9 @@ def Valider(channel):
       minutes = menus[profondeur] % 60
       heures = max(0,min(23, heures))
       minutes = max(0,min(59, minutes))
-      reglage.horloge.setHeures(heures)
-      reglage.horloge.setMinutes(minutes)
-      reglage.horloge.setSecondes(0)
+      reglages.horloge.setHeures(heures)
+      reglages.horloge.setMinutes(minutes)
+      reglages.horloge.setSecondes(0)
    elif ancetres_str == "010": #activer/desactiver alarme
       etat = reglages.getAlarmes()[0].getEtat()
       etat = Alarme.ON if etat == Alarme.OFF else Alarme.OFF
@@ -127,6 +131,8 @@ GPIO.add_event_detect(BOUTON_VALIDER, GPIO.FALLING, callback=Valider, bouncetime
 class ThreadMenu(Thread):
    
    def run(self):
+      global menus, profondeur, compteur, compteur_prec, INTERVALLE_CHANGEMENT
+      global TOUS_LES_NOMBRES_DE_SOUS_MENUS, MENU_AFFICHAGE
       while(1):
          # On prend la valeur du delta du codeur (+ ou -)
          compteur += molette_1.get_delta()
