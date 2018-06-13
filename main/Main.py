@@ -165,7 +165,7 @@ thread_menu.start()
 #--------------------------------BOUCLE-PRINCIPALE------------------------------
 
 while(1):
-
+    print(reglages.getHorloge().now())
     reglages.getHorloge().tictac()
     # pour l'instant on suppose qu'il y a toujours au moins une alarme
     if reglages.getAlarmes()[0].getEtat() == Alarme.ON :
