@@ -92,38 +92,38 @@ class Aube:
 		diminuerAube(duree)
 
 	def choix(self):
-	while True :
-		choix = -1
-		while choix < 1 or choix > 5 :
-			print("Choisir le mode")
-			print("\n 1 : Allumer la lumière")
-			print("\n 2 : Eteindre la lumière")
-			print("\n 3 : Allumer la lumière en choisissant votre intensité")
-			print("\n 4 : Utiliser l'aube")
-			print("\n 5 : Quitter le programme \n")
-			choix = input()
-		if choix == 1:
-			allumer()
-		elif choix == 2:
-			eteindre()
-		elif choix == 3 :
-			k = -1
-			while k < 0 or k > 100 :
-				print("Choisir l'intensité entre 0 et 100")
-				k = input()
-			setIntensite(k)
-		elif choix == 4:
-			k = -1
-			while k < 0 or k > 100 :
-				print("Choisir l'intensité entre 0 et 100")
-				k = input()
-			j = -1
-			while j < 1 or j > 5 :
-				print("Choisir le temps de l'aube entre 1 et 5")
-				j = input()
-			aube(k,j)
-		elif choix == 5:
-			break
+		while True :
+			choix = -1
+			while choix < 1 or choix > 5 :
+				print("Choisir le mode")
+				print("\n 1 : Allumer la lumière")
+				print("\n 2 : Eteindre la lumière")
+				print("\n 3 : Allumer la lumière en choisissant votre intensité")
+				print("\n 4 : Utiliser l'aube")
+				print("\n 5 : Quitter le programme \n")
+				choix = input()
+			if choix == 1:
+				allumer()
+			elif choix == 2:
+				eteindre()
+			elif choix == 3 :
+				k = -1
+				while k < 0 or k > 100 :
+					print("Choisir l'intensité entre 0 et 100")
+					k = input()
+				setIntensite(k)
+			elif choix == 4:
+				k = -1
+				while k < 0 or k > 100 :
+					print("Choisir l'intensité entre 0 et 100")
+					k = input()
+				j = -1
+				while j < 1 or j > 5 :
+					print("Choisir le temps de l'aube entre 1 et 5")
+					j = input()
+				aube(k,j)
+			elif choix == 5:
+				break
 
 
 if __name__ == "__main__":
