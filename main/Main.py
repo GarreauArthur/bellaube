@@ -126,6 +126,23 @@ def Valider(channel):
 
 GPIO.add_event_detect(BOUTON_VALIDER, GPIO.FALLING, callback=Valider, bouncetime=300)
 
+
+#---------------------------------BOUTON RETOUR---------------------------------
+
+GPIO.setup(BOUTON_RETOUR, GPIO.IN, pull_up_down=GPIO.PUD_UP)#33
+
+def Retour(channel):
+   global profondeur, menus, MENUS_AFFICHAGE
+   if profondeur > 0:
+      profondeur -= 1
+      #modifier l'affichage
+      menu_str = "".join(str(b) for b in menus[:profondeur+1])
+      print("---------------------------")
+      print(MENUS_AFFICHAGE[menu_str])
+
+GPIO.add_event_detect(BOUTON_RETOUR, GPIO.FALLING, callback=Retour, bouncetime=300)
+
+
 #-----------------------------------THREAD MENUS--------------------------------
 
 class ThreadMenu(Thread):
