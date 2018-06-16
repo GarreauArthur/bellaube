@@ -58,7 +58,8 @@ TOUS_LES_NOMBRES_DE_SOUS_MENUS = {
   "0132"  :  101,
   "02"    :  101,
   "03"    :    1,
-  "1"     :    5,
+  "1"     :    3,
+  "10"    :    1, #le nombre de chansons, idéaliment à remplacer par musique.liste.lenght
   "12"    :  101,
   "2"     :    2,
   "20"    :    1,

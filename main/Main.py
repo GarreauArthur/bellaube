@@ -102,7 +102,7 @@ def Valider(channel):
       pass
    elif ancetres_str == "12":#Réglage volume musique
       volume = max(0,min(100, menus[profondeur]))
-      reglage.setVolume(volume)
+      reglages.setVolume(volume)
    elif ancetres_str == "21":#Réglage intensité écran lampe
       aube.setIntensite(menus[profondeur])
    else:
@@ -119,6 +119,8 @@ def Valider(channel):
         print(MENUS_AFFICHAGE[menu_str])
         etat = Aube.ON if etat == Aube.OFF else Aube.OFF
         reglages.getAlarmes()[0].setAubeEtat(etat)
+      elif menu_str == "10":#choix musique
+        pass
       elif menu_str == "11": #play/pause musique (ecran musique)
         etat = son.getEtat()
         if etat == Son.PLAY :
