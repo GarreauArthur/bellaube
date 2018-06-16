@@ -112,14 +112,14 @@ def Valider(channel):
       menu_str = "".join(str(b) for b in menus[:profondeur+1])
       if menu_str == "010": #activer/desactiver alarme
         etat = reglages.getAlarmes()[0].getEtat()
+        MENUS_AFFICHAGE[menu_str] = ("Activer Alarme" if etat == Alarme.ON else "Desactiver Alarme")
+        print(MENUS_AFFICHAGE[menu_str])
         etat = (Alarme.ON if etat == Alarme.OFF else Alarme.OFF)
         reglages.getAlarmes()[0].setEtat(etat)
-        MENUS_AFFICHAGE[menu_str] = ("Activer Alarme" if Alarme.ON else "Desactiver Alarme")
-        print("ON" if Alarme.ON else "OFF")
       elif menu_str == "0130": # activer désactiver aube
         etat = reglages.getAlarmes()[0].getAubeEtat()
+        MENUS_AFFICHAGE[menu_str] = ("Activer Aube" if etat == Aube.ON else "Desactiver Aube")
         etat = Alarme.ON if etat == Aube.OFF else Aube.OFF
-        MENUS_AFFICHAGE[menu_str] = ("Activer Aube" if Aube.ON else "Desactiver Aube")
         reglages.getAlarmes()[0].setAubeEtat(etat)
       elif profondeur < 4 :
          profondeur += 1

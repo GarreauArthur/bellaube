@@ -43,7 +43,7 @@ class Horloge:
 		else:
 			self.heure.setHeures(h)
 
-	def getHeure(self)
+	def getHeure(self):
 		return self.heure
 
 if __name__== '__main__':
