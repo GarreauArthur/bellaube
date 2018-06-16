@@ -134,7 +134,7 @@ GPIO.setup(BOUTON_RETOUR, GPIO.IN, pull_up_down=GPIO.PUD_UP)#33
 def Retour(channel):
    global profondeur, menus, MENUS_AFFICHAGE
    if profondeur > 0:
-    menus[profondeur] = 0
+      menus[profondeur] = 0
       profondeur -= 1
       #modifier l'affichage
       menu_str = "".join(str(b) for b in menus[:profondeur+1])
