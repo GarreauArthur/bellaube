@@ -54,6 +54,7 @@ molette_2 = BasicEncoder(MOLETTE_2_PIN_1,MOLETTE_2_PIN_2)
 def reveiller():
     global reglages, aube, son
     al = reglages.getAlarmes()[0] # on récupère l'objet alarme
+    print("DEBOUT")
     # gestion de l'aube
     # gestion du son
 #-------------------------Gestion de l'appui sur le bouton---------------------
@@ -122,7 +123,11 @@ def Valider(channel):
         etat = son.getEtat()
         if etat == Son.PLAY :
           son.pause()
-        else
+          MENU_AFFICHAGE["11"] = "PLAY"
+          print(MENUS_AFFICHAGE[menu_str])
+        else:
+          MENU_AFFICHAGE["11"] = "PAUSE"
+          print(MENUS_AFFICHAGE[menu_str])
           son.play()
       elif menu_str == "20": # allumer/éteindre aube
         etat = aube.getEtat()

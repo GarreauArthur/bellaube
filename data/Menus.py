@@ -92,13 +92,13 @@ MENUS_AFFICHAGE = {
   "030"   : "activer/désactiver",
   "1"     : "Musique",
   "10"    : "choix_musique",
-  "11"    : "play/pause",
+  "11"    : "PLAY",
   "12"    : "volume",
   "120"   : "échelle_volume",
   "2"     : "Lampe",
   "20"    : "Allumer/éteindre",
   "21"    : "Intensité",
-  "210"   : "échelle_intensité"
+  "210"   : "0"
 }
 
 
