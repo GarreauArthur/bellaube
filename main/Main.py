@@ -123,10 +123,10 @@ def Valider(channel):
         etat = son.getEtat()
         if etat == Son.PLAY :
           son.pause()
-          MENU_AFFICHAGE["11"] = "PLAY"
+          MENUS_AFFICHAGE["11"] = "PLAY"
           print(MENUS_AFFICHAGE[menu_str])
         else:
-          MENU_AFFICHAGE["11"] = "PAUSE"
+          MENUS_AFFICHAGE["11"] = "PAUSE"
           print(MENUS_AFFICHAGE[menu_str])
           son.play()
       elif menu_str == "20": # allumer/éteindre aube
@@ -165,7 +165,7 @@ class ThreadMenu(Thread):
    
    def run(self):
       global menus, profondeur, compteur, compteur_prec, INTERVALLE_CHANGEMENT
-      global TOUS_LES_NOMBRES_DE_SOUS_MENUS, MENU_AFFICHAGE
+      global TOUS_LES_NOMBRES_DE_SOUS_MENUS, MENUS_AFFICHAGE
       while(1):
          # On prend la valeur du delta du codeur (+ ou -)
          compteur += molette_1.get_delta()
