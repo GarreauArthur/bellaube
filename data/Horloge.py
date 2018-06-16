@@ -43,6 +43,9 @@ class Horloge:
 		else:
 			self.heure.setHeures(h)
 
+	def getHeure():
+		return self.heure
+
 if __name__== '__main__':
 	h = Horloge();
 	while 1 :

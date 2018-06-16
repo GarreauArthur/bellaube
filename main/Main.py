@@ -134,6 +134,7 @@ GPIO.setup(BOUTON_RETOUR, GPIO.IN, pull_up_down=GPIO.PUD_UP)#33
 def Retour(channel):
    global profondeur, menus, MENUS_AFFICHAGE
    if profondeur > 0:
+    menus[profondeur] = 0
       profondeur -= 1
       #modifier l'affichage
       menu_str = "".join(str(b) for b in menus[:profondeur+1])
@@ -193,7 +194,7 @@ while(1):
     reglages.getHorloge().tictac()
     # pour l'instant on suppose qu'il y a toujours au moins une alarme
     if reglages.getAlarmes()[0].getEtat() == Alarme.ON :
-        if reglages.getAlarmes()[0].getAlarme() == reglages.getHorloge() :
+        if reglages.getAlarmes()[0].getAlarme() == reglages.getHorloge().getHeure() :
             # déclencher le réveil dans un autre thread
             try:
                 _thread.start_new_thread(reveiller,())
