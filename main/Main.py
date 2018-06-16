@@ -76,11 +76,6 @@ def Valider(channel):
       reglages.horloge.setHeures(heures)
       reglages.horloge.setMinutes(minutes)
       reglages.horloge.setSecondes(0)
-   elif ancetres_str == "010": #activer/desactiver alarme
-      etat = reglages.getAlarmes()[0].getEtat()
-      etat = Alarme.ON if etat == Alarme.OFF else Alarme.OFF
-      reglages.getAlarmes()[0].setEtat(etat)
-      print("ON" if Alarme.ON else "OFF")
    elif ancetres_str == "011":
       #Réglage de l'heure de l'alarme
       heures = menus[profondeur]//60
@@ -96,10 +91,6 @@ def Valider(channel):
       #Réglage volume alarme
       volume = max(0,min(100, menus[profondeur]))
       reglages.getAlarmes()[0].setSonVolume(volume)
-   elif ancetres_str == "0130": # activer désactiver aube
-      etat = reglages.getAlarmes()[0].getAubeEtat()
-      etat = Alarme.ON if etat == Alarme.OFF else Alarme.OFF
-      reglages.getAlarmes()[0].setAubeEtat(etat)
    elif ancetres_str == "0131":#Réglage durée aube
       delta = min(500,menus[profondeur]) # limite arbitraire
       reglages.getAlarmes()[0].setAubeDuree(delta)
@@ -118,9 +109,20 @@ def Valider(channel):
    elif ancetres_str == "21":#Réglage intensité écran lampe
       aube.setIntensite(menus[profondeur])
    else:
-      if profondeur < 4 :
+      menu_str = "".join(str(b) for b in menus[:profondeur+1])
+      if menu_str == "010": #activer/desactiver alarme
+        etat = reglages.getAlarmes()[0].getEtat()
+        etat = Alarme.ON if etat == Alarme.OFF else Alarme.OFF
+        reglages.getAlarmes()[0].setEtat(etat)
+        MENUS_AFFICHAGE[menu_str] = "Activer Alarme" if Alarme.ON else "Desactiver Alarme"
+        print("ON" if Alarme.ON else "OFF")
+      elif menu_str == "0130": # activer désactiver aube
+        etat = reglages.getAlarmes()[0].getAubeEtat()
+        etat = Alarme.ON if etat == Aube.OFF else Aube.OFF
+        MENUS_AFFICHAGE[menu_str] = "Activer Aube" if Aube.ON else "Desactiver Aube"
+        reglages.getAlarmes()[0].setAubeEtat(etat)
+      elif profondeur < 4 :
          profondeur += 1
-         menu_str = "".join(str(b) for b in menus[:profondeur+1])
          print("---------------------------")
          print(MENUS_AFFICHAGE[menu_str])
 
