@@ -64,7 +64,7 @@ def reveiller():
 GPIO.setup(BOUTON_VALIDER, GPIO.IN, pull_up_down=GPIO.PUD_UP)#GPIO22
 
 def Valider(channel):
-   global profondeur, reglages, menus
+   global profondeur, reglages, menus, son, aube
    ancetres_str = "".join(str(a) for a in menus[:profondeur])
    
    if ancetres_str == "00":
@@ -102,10 +102,6 @@ def Valider(channel):
    elif ancetres_str == "12":#Réglage volume musique
       volume = max(0,min(100, menus[profondeur]))
       reglage.setVolume(volume)
-   elif ancetres_str == "20": # allumer/éteindre aube
-      etat = aube.getEtat()
-      etat = Aube.ON if etat == Aube.OFF else Aube.OFF
-      aube.setEtat(etat)
    elif ancetres_str == "21":#Réglage intensité écran lampe
       aube.setIntensite(menus[profondeur])
    else:
@@ -119,10 +115,22 @@ def Valider(channel):
       elif menu_str == "0130": # activer désactiver aube
         etat = reglages.getAlarmes()[0].getAubeEtat()
         MENUS_AFFICHAGE[menu_str] = ("Activer Aube" if etat == Aube.ON else "Desactiver Aube")
-        etat = Alarme.ON if etat == Aube.OFF else Aube.OFF
+        print(MENUS_AFFICHAGE[menu_str])
+        etat = Aube.ON if etat == Aube.OFF else Aube.OFF
         reglages.getAlarmes()[0].setAubeEtat(etat)
+      elif menu_str == "11": #play/pause musique (ecran musique)
+        etat = son.getEtat()
+        if etat == Son.PLAY :
+          son.pause()
+        else
+          son.play()
+      elif menu_str == "20": # allumer/éteindre aube
+        etat = aube.getEtat()
+        etat = Aube.ON if etat == Aube.OFF else Aube.OFF
+        aube.setEtat(etat)
       elif profondeur < 4 :
          profondeur += 1
+         menu_str = "".join(str(b) for b in menus[:profondeur+1])
          print("---------------------------")
          print(MENUS_AFFICHAGE[menu_str])
 

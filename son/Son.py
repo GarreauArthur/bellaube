@@ -11,6 +11,8 @@ class Son:
 	* récupérer la liste des morceaux ici lors de l'init
 	* définir échelle du volume
 	"""
+	PLAY = 1
+	PAUSE = 0
 
 	def __init__(self):
 		"""
@@ -18,16 +20,21 @@ class Son:
 		"""
 		self.volume = 10 # random, je laisse ça à l'équipe son
 		self.listeMusiques = []
+		self.etat = Son.PAUSE #permet de savoir si on est en cours de lecture ou non
 
 	def lireMusique(self,morceau):
 		"""
 		TODO : Lire un morceau de musique, interagit avec le matériel
 		"""
 
+	def play(self):
+		self.setEtat(Son.PLAY)
+
 	def pause(self):
 		"""
 		TODO : faire pause
 		"""
+		self.setEtat(Son.PAUSE)
 
 	def suivant(self):
 		"""
@@ -74,6 +81,12 @@ class Son:
 
 	def getVolume(self):
 		return self.volume
+
+	def getEtat(self):
+		return self.etat
+
+	def setEtat(self, e):
+		self.etat = e
 
 	def crescendo(self, deb, fin, t):
 		"""
