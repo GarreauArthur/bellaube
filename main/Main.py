@@ -54,6 +54,7 @@ molette_2 = BasicEncoder(MOLETTE_2_PIN_1,MOLETTE_2_PIN_2)
 def reveiller():
     global reglages, aube, son
     al = reglages.getAlarmes()[0] # on récupère l'objet alarme
+    print("DEBOUT")
     # gestion de l'aube
     # gestion du son
 #-------------------------Gestion de l'appui sur le bouton---------------------
@@ -64,7 +65,7 @@ def reveiller():
 GPIO.setup(BOUTON_VALIDER, GPIO.IN, pull_up_down=GPIO.PUD_UP)#GPIO22
 
 def Valider(channel):
-   global profondeur, reglages, menus
+   global profondeur, reglages, menus, son, aube
    ancetres_str = "".join(str(a) for a in menus[:profondeur])
    
    if ancetres_str == "00":
@@ -76,11 +77,6 @@ def Valider(channel):
       reglages.horloge.setHeures(heures)
       reglages.horloge.setMinutes(minutes)
       reglages.horloge.setSecondes(0)
-   elif ancetres_str == "010": #activer/desactiver alarme
-      etat = reglages.getAlarmes()[0].getEtat()
-      etat = Alarme.ON if etat == Alarme.OFF else Alarme.OFF
-      reglages.getAlarmes()[0].setEtat(etat)
-      print("ON" if Alarme.ON else "OFF")
    elif ancetres_str == "011":
       #Réglage de l'heure de l'alarme
       heures = menus[profondeur]//60
@@ -96,10 +92,6 @@ def Valider(channel):
       #Réglage volume alarme
       volume = max(0,min(100, menus[profondeur]))
       reglages.getAlarmes()[0].setSonVolume(volume)
-   elif ancetres_str == "0130": # activer désactiver aube
-      etat = reglages.getAlarmes()[0].getAubeEtat()
-      etat = Alarme.ON if etat == Alarme.OFF else Alarme.OFF
-      reglages.getAlarmes()[0].setAubeEtat(etat)
    elif ancetres_str == "0131":#Réglage durée aube
       delta = min(500,menus[profondeur]) # limite arbitraire
       reglages.getAlarmes()[0].setAubeDuree(delta)
@@ -110,15 +102,42 @@ def Valider(channel):
       pass
    elif ancetres_str == "12":#Réglage volume musique
       volume = max(0,min(100, menus[profondeur]))
-      reglage.setVolume(volume)
-   elif ancetres_str == "20": # allumer/éteindre aube
-      etat = aube.getEtat()
-      etat = Aube.ON if etat == Aube.OFF else Aube.OFF
-      aube.setEtat(etat)
+      reglages.setVolume(volume)
    elif ancetres_str == "21":#Réglage intensité écran lampe
       aube.setIntensite(menus[profondeur])
    else:
-      if profondeur < 4 :
+      menu_str = "".join(str(b) for b in menus[:profondeur+1])
+      if menu_str == "010": #activer/desactiver alarme
+        etat = reglages.getAlarmes()[0].getEtat()
+        MENUS_AFFICHAGE[menu_str] = ("Activer Alarme" if etat == Alarme.ON else "Desactiver Alarme")
+        print(MENUS_AFFICHAGE[menu_str])
+        etat = (Alarme.ON if etat == Alarme.OFF else Alarme.OFF)
+        reglages.getAlarmes()[0].setEtat(etat)
+      elif menu_str == "0130": # activer désactiver aube
+        etat = reglages.getAlarmes()[0].getAubeEtat()
+        MENUS_AFFICHAGE[menu_str] = ("Activer Aube" if etat == Aube.ON else "Desactiver Aube")
+        print(MENUS_AFFICHAGE[menu_str])
+        etat = Aube.ON if etat == Aube.OFF else Aube.OFF
+        reglages.getAlarmes()[0].setAubeEtat(etat)
+      elif menu_str == "10":#choix musique
+        pass
+      elif menu_str == "11": #play/pause musique (ecran musique)
+        etat = son.getEtat()
+        if etat == Son.PLAY :
+          son.pause()
+          MENUS_AFFICHAGE["11"] = "PLAY"
+          print(MENUS_AFFICHAGE[menu_str])
+        else:
+          MENUS_AFFICHAGE["11"] = "PAUSE"
+          print(MENUS_AFFICHAGE[menu_str])
+          son.play()
+      elif menu_str == "20": # allumer/éteindre aube
+        etat = aube.getEtat()
+        MENUS_AFFICHAGE[menu_str] = ("Alumer Aube" if etat == Aube.ON else "Eteindre Aube")
+        print(MENUS_AFFICHAGE[menu_str])
+        etat = Aube.ON if etat == Aube.OFF else Aube.OFF
+        aube.setEtat(etat)
+      elif profondeur < 4 :
          profondeur += 1
          menu_str = "".join(str(b) for b in menus[:profondeur+1])
          print("---------------------------")
@@ -134,7 +153,7 @@ GPIO.setup(BOUTON_RETOUR, GPIO.IN, pull_up_down=GPIO.PUD_UP)#33
 def Retour(channel):
    global profondeur, menus, MENUS_AFFICHAGE
    if profondeur > 0:
-    menus[profondeur] = 0
+      menus[profondeur] = 0
       profondeur -= 1
       #modifier l'affichage
       menu_str = "".join(str(b) for b in menus[:profondeur+1])
@@ -150,7 +169,7 @@ class ThreadMenu(Thread):
    
    def run(self):
       global menus, profondeur, compteur, compteur_prec, INTERVALLE_CHANGEMENT
-      global TOUS_LES_NOMBRES_DE_SOUS_MENUS, MENU_AFFICHAGE
+      global TOUS_LES_NOMBRES_DE_SOUS_MENUS, MENUS_AFFICHAGE
       while(1):
          # On prend la valeur du delta du codeur (+ ou -)
          compteur += molette_1.get_delta()

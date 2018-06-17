@@ -66,7 +66,7 @@ class Aube:
 			self.etat = Aube.ON
 			self.allumer()
 		else:
-			self.etat = AUBE.OFF
+			self.etat = Aube.OFF
 			self.eteindre()
 
 	def getEtat(self):
