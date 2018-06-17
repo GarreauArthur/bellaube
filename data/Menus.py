@@ -97,7 +97,7 @@ MENUS_AFFICHAGE = {
   "12"    : "volume",
   "120"   : "échelle_volume",
   "2"     : "Lampe",
-  "20"    : "Allumer/éteindre",
+  "20"    : "Allumer aube",
   "21"    : "Intensité",
   "210"   : "0"
 }

@@ -133,6 +133,8 @@ def Valider(channel):
           son.play()
       elif menu_str == "20": # allumer/éteindre aube
         etat = aube.getEtat()
+        MENUS_AFFICHAGE[menu_str] = ("Alumer Aube" if etat == Aube.ON else "Eteindre Aube")
+        print(MENUS_AFFICHAGE[menu_str])
         etat = Aube.ON if etat == Aube.OFF else Aube.OFF
         aube.setEtat(etat)
       elif profondeur < 4 :
