@@ -18,14 +18,14 @@ class Alarme:
         self.etat = Alarme.OFF # alarme activée ou désactivée ?
         self.heure = Heure()
         self.son = {
-            "etat" : Alarme.OFF,
+            "etat" : Alarme.ON,
             "musique" : "",
             "volume" : 0
         }
         self.aube = {
             "etat" : Alarme.OFF,
-            "duree" : 0, # secondes
-            "intensite" : 0
+            "duree" : 100, # secondes
+            "intensite" : 50
         }
 
     #-------------------------

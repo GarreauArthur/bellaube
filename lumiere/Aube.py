@@ -77,6 +77,7 @@ class Aube:
 		return self.etat
 
 	def augmenterAube(self, i, duree):
+		duree = duree/i
 		for k in range(0,i+1,1):
 			self.ledPWM.ChangeDutyCycle(k)
 			time.sleep(duree)

@@ -56,6 +56,18 @@ def reveiller():
     al = reglages.getAlarmes()[0] # on récupère l'objet alarme
     print("DEBOUT")
     # gestion de l'aube
+    if al.getAubeEtat() == Alarme.ON:
+      try:
+        a_int = al.getAubeIntensite()
+        a_duree = al.getAubeDuree()
+        _thread.start_new_thread(aube.augmenterAube,(a_int, a_duree))
+      except:
+        print("erreur allumage aube")
+
+    if al.getSonEtat() == Alarme.ON:
+      pass
+      
+
     # gestion du son
 #-------------------------Gestion de l'appui sur le bouton---------------------
 # set up as input
