@@ -9,10 +9,10 @@ class Musique:
 	Pour l'instant, on suppose que toutes les chansons sont dispo dans le dossier
 	beelaude/liste_musique
 	"""
+	path = "./bellaube/liste_musiques/"
 
 	def __init__(self):
-		mypath = "./bellaube/liste_musiques/"
-		self.liste = [f for f in listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".mp3")]
+		self.liste = [f for f in listdir(Musique.path) if isfile(join(Musique.path, f)) and f.endswith(".mp3")]
 		nb = len(self.liste)#nombre de musiques
 		if nb > 0:
 			TOUS_LES_NOMBRES_DE_SOUS_MENUS["10"] = nb
@@ -30,7 +30,7 @@ class Musique:
 	def setListe(self,l):
 		self.liste = l
 
-	def getLenght(self):
+	def getLength(self):
 		"""
 		retourne le nombre de musique dans la liste
 		"""
@@ -38,7 +38,14 @@ class Musique:
 	'''
 	def ajouterSon(self,son):
 		self.liste.append(son)
-	''' 
+	'''
+
+	def getTitre(self, i):
+		"""retourne le titre dans la liste à la position i"""
+		if -1 < i < self.getLength() :
+			return self.titre[i]
+		else :
+			return "defaut.mp3" # ajouter une musique par défaut
 
 
 if __name__ == '__main__':
