@@ -112,6 +112,9 @@ def Valider(channel):
       reglages.getAlarmes()[0].setAubeIntensite(intensite)
    elif ancetres_str == "03": #activer/désactiver bluetooth
       pass
+   elif ancetres_str == "10":#choix musique
+      print("Chanson choisie :" + MENUS_AFFICHAGE[menu_str])
+      print(musique.getListe()[menus[profondeur]])
    elif ancetres_str == "12":#Réglage volume musique
       volume = max(0,min(100, menus[profondeur]))
       reglages.setVolume(volume)
@@ -131,9 +134,6 @@ def Valider(channel):
         print(MENUS_AFFICHAGE[menu_str])
         etat = Aube.ON if etat == Aube.OFF else Aube.OFF
         reglages.getAlarmes()[0].setAubeEtat(etat)
-      elif menu_str == "10":#choix musique
-        print("Chanson choisie :" + MENUS_AFFICHAGE[menu_str])
-        print(musique.getListe()[menus[profondeur]])
       elif menu_str == "11": #play/pause musique (ecran musique)
         etat = son.getEtat()
         if etat == Son.PLAY :

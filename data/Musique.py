@@ -11,14 +11,18 @@ class Musique:
 	"""
 
 	def __init__(self):
-		mypath = "./musiques/"
+		mypath = "./bellaube/liste_musiques/"
 		self.liste = [f for f in listdir(mypath) if isfile(join(mypath, f)) and f.endswith(".mp3")]
 		nb = len(self.liste)#nombre de musiques
 		if nb > 0:
 			TOUS_LES_NOMBRES_DE_SOUS_MENUS["10"] = nb
+			TOUS_LES_NOMBRES_DE_SOUS_MENUS["012"] = nb
 			for i in range(nb):
 				key = "%s%d" % ("10", i)
 				MENUS_AFFICHAGE[key] = self.liste[i]
+				key = "%s%d" % ("012", i)
+				MENUS_AFFICHAGE[key] = self.liste[i]
+
 
 	def getListe(self):
 		return self.liste
