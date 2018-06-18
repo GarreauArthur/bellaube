@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
+import pygame
+from pygame.locals import *
+import time
+
 
 class Son:
 	"""
@@ -15,17 +19,20 @@ class Son:
 	PAUSE = 0
 
 	def __init__(self):
-		"""
-		TODO : init liste des musiques
-		"""
-		self.volume = 10 # random, je laisse ça à l'équipe son
-		self.listeMusiques = []
+		pygame.mixer.init(44100,-16,2,2048)
+		pygame.mixer.get_init()
+		#musique=pygame.mixer.Sound("681.wav")
+		pygame.mixer.Sound.set_volume(son,0.5)
+		self.volume = 50 # random, je laisse ça à l'équipe son
 		self.etat = Son.PAUSE #permet de savoir si on est en cours de lecture ou non
 
 	def lireMusique(self,morceau):
 		"""
 		TODO : Lire un morceau de musique, interagit avec le matériel
 		"""
+		musique=pygame.mixer.Sound(morceau)
+		pygame.mixer.Sound.set_volume(musique,self.volume)
+
 
 	def play(self):
 		self.setEtat(Son.PLAY)
@@ -63,13 +70,17 @@ class Son:
 
 	def augmenterVolume(self):
 		"""
-		TODO : augmenter le volume
+		augmente le volume
 		"""
+		if self.volume < 100 :
+			self.volume += 1
 
 	def diminuerVolume(self):
 		"""
-		TODO : diminuer le volume
+		diminue le volume
 		"""
+		if self.volume > 0 :
+			self.volume -= 1
 
 	def setVolume(self, vol):
 		"""
