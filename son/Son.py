@@ -22,7 +22,7 @@ class Son:
 		pygame.mixer.init(44100,-16,2,2048)
 		pygame.mixer.get_init()
 		#musique=pygame.mixer.Sound("681.wav")
-		pygame.mixer.Sound.set_volume(son,0.5)
+		#pygame.mixer.Sound.set_volume(son,0.5)
 		self.volume = 50 # random, je laisse ça à l'équipe son
 		self.etat = Son.PAUSE #permet de savoir si on est en cours de lecture ou non
 
