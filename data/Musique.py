@@ -16,11 +16,11 @@ class Musique:
 		nb = len(self.liste)#nombre de musiques
 		if nb > 0:
 			TOUS_LES_NOMBRES_DE_SOUS_MENUS["10"] = nb
-			TOUS_LES_NOMBRES_DE_SOUS_MENUS["012"] = nb
+			TOUS_LES_NOMBRES_DE_SOUS_MENUS["0120"] = nb
 			for i in range(nb):
 				key = "%s%d" % ("10", i)
 				MENUS_AFFICHAGE[key] = self.liste[i]
-				key = "%s%d" % ("012", i)
+				key = "%s%d" % ("0120", i)
 				MENUS_AFFICHAGE[key] = self.liste[i]
 
 
