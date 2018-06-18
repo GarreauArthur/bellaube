@@ -78,7 +78,7 @@ MENUS_AFFICHAGE = {
   "0110"  : "réglage heure de l'alarme",
   "012"   : "Choix alarme sonore",
   "0120"  : "liste de musique",
-  "01200" : "chansons",
+  "01200" : "chansons",# à supprimer ou remplacer ?
   "0121"  : "volume",
   "01210" : "degré volume",
   "013"   : "config Aube",

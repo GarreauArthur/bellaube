@@ -97,9 +97,9 @@ def Valider(channel):
       minutes = max(0,min(59, minutes))
       reglages.getAlarmes()[0].setHeuresAlarme(heures)
       reglages.getAlarmes()[0].setMinutesAlarme(minutes)
-   elif ancetres_str == "0120":
-      #Changer chanson alarme
-      pass
+   elif ancetres_str == "0120":# Choix de la chanson pour l'alarme
+      morceau = musique.getTitre(menus[profondeur])
+      reglages.getAlarmes()[0].setSonMusique(morceau)
    elif ancetres_str == "0121":
       #Réglage volume alarme
       volume = max(0,min(100, menus[profondeur]))
@@ -113,7 +113,6 @@ def Valider(channel):
    elif ancetres_str == "03": #activer/désactiver bluetooth
       pass
    elif ancetres_str == "10":#choix musique
-      print("Chanson choisie :" + MENUS_AFFICHAGE[menu_str])
       print(musique.getListe()[menus[profondeur]])
    elif ancetres_str == "12":#Réglage volume musique
       volume = max(0,min(100, menus[profondeur]))
