@@ -77,7 +77,7 @@ def reveiller():
 GPIO.setup(BOUTON_VALIDER, GPIO.IN, pull_up_down=GPIO.PUD_UP)#GPIO22
 
 def Valider(channel):
-   global profondeur, reglages, menus, son, aube
+   global profondeur, reglages, menus, son, aube, musique
    ancetres_str = "".join(str(a) for a in menus[:profondeur])
    
    if ancetres_str == "00":
@@ -132,7 +132,8 @@ def Valider(channel):
         etat = Aube.ON if etat == Aube.OFF else Aube.OFF
         reglages.getAlarmes()[0].setAubeEtat(etat)
       elif menu_str == "10":#choix musique
-        pass
+        print("Chanson choisie :" + MENUS_AFFICHAGE[menu_str])
+        print(musique.getListe()[menus[profondeur]])
       elif menu_str == "11": #play/pause musique (ecran musique)
         etat = son.getEtat()
         if etat == Son.PLAY :
