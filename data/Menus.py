@@ -88,7 +88,7 @@ MENUS_AFFICHAGE = {
   "0132"  : "Intensité",
   "01320" : "0", #échelle_intensité_aube
   "02"    : "Lumière",
-  "020"   : "0","échelle_intensité_lumière",
+  "020"   : "0",#"échelle_intensité_lumière",
   "03"    : "Bluetooth",
   "030"   : "activer/désactiver",
   "1"     : "Musique",

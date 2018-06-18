@@ -43,7 +43,7 @@ class Musique:
 	def getTitre(self, i):
 		"""retourne le titre dans la liste à la position i"""
 		if -1 < i < self.getLength() :
-			return self.titre[i]
+			return self.liste[i]
 		else :
 			return "defaut.mp3" # ajouter une musique par défaut
 
