@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
+import pygame
+from pygame.locals import *
+import time
+
 
 class Son:
 	"""
@@ -15,26 +19,37 @@ class Son:
 	PAUSE = 0
 
 	def __init__(self):
-		"""
-		TODO : init liste des musiques
-		"""
-		self.volume = 10 # random, je laisse ça à l'équipe son
-		self.listeMusiques = []
+		pygame.mixer.init(44100,-16,2,2048)
+		pygame.mixer.get_init()
+		#musique=pygame.mixer.Sound("681.wav")
+		#pygame.mixer.Sound.set_volume(son,0.5)
+		self.volume = 50 # random, je laisse ça à l'équipe son
 		self.etat = Son.PAUSE #permet de savoir si on est en cours de lecture ou non
+		self.morceau = ""
 
 	def lireMusique(self,morceau):
 		"""
 		TODO : Lire un morceau de musique, interagit avec le matériel
 		"""
+		pygame.mixer.music.load("%s/%s"% ("./bellaube/liste_musiques/",morceau))
+		pygame.mixer.music.set_volume(self.volume/100)
+		pygame.mixer.music.play()
+
 
 	def play(self):
 		self.setEtat(Son.PLAY)
+		pygame.mixer.music.play()
 
 	def pause(self):
 		"""
 		TODO : faire pause
 		"""
 		self.setEtat(Son.PAUSE)
+		pygame.mixer.music.pause()
+		
+
+	def stop(self):
+		pygame.mixer.music.stop()
 
 	def suivant(self):
 		"""
@@ -63,13 +78,17 @@ class Son:
 
 	def augmenterVolume(self):
 		"""
-		TODO : augmenter le volume
+		augmente le volume
 		"""
+		if self.volume < 100 :
+			self.volume += 1
 
 	def diminuerVolume(self):
 		"""
-		TODO : diminuer le volume
+		diminue le volume
 		"""
+		if self.volume > 0 :
+			self.volume -= 1
 
 	def setVolume(self, vol):
 		"""
@@ -78,6 +97,7 @@ class Son:
 		méthode
 		"""
 		self.volume = vol
+		pygame.mixer.music.set_volume(self.volume/100)
 
 	def getVolume(self):
 		return self.volume
@@ -97,6 +117,12 @@ class Son:
 		"""
 		TODO : diminuer le volume de deb vers fin sur une période de temps t
 		"""
+
+	def getMorceau(self):
+		return self.morceau
+
+	def setMorceau(self, m):
+		self.morceau = m
 
 if __name__ == "__main__":
 	s = Son()

@@ -56,6 +56,18 @@ def reveiller():
     al = reglages.getAlarmes()[0] # on récupère l'objet alarme
     print("DEBOUT")
     # gestion de l'aube
+    if al.getAubeEtat() == Alarme.ON:
+      try:
+        a_int = al.getAubeIntensite()
+        a_duree = al.getAubeDuree()
+        _thread.start_new_thread(aube.augmenterAube,(a_int, a_duree))
+      except:
+        print("erreur allumage aube")
+
+    if al.getSonEtat() == Alarme.ON:
+      pass
+      
+
     # gestion du son
 #-------------------------Gestion de l'appui sur le bouton---------------------
 # set up as input
@@ -65,7 +77,7 @@ def reveiller():
 GPIO.setup(BOUTON_VALIDER, GPIO.IN, pull_up_down=GPIO.PUD_UP)#GPIO22
 
 def Valider(channel):
-   global profondeur, reglages, menus, son, aube
+   global profondeur, reglages, menus, son, aube, musique
    ancetres_str = "".join(str(a) for a in menus[:profondeur])
    
    if ancetres_str == "00":
@@ -77,6 +89,7 @@ def Valider(channel):
       reglages.horloge.setHeures(heures)
       reglages.horloge.setMinutes(minutes)
       reglages.horloge.setSecondes(0)
+      Retour(0)
    elif ancetres_str == "011":
       #Réglage de l'heure de l'alarme
       heures = menus[profondeur]//60
@@ -85,23 +98,36 @@ def Valider(channel):
       minutes = max(0,min(59, minutes))
       reglages.getAlarmes()[0].setHeuresAlarme(heures)
       reglages.getAlarmes()[0].setMinutesAlarme(minutes)
-   elif ancetres_str == "0120":
-      #Changer chanson alarme
-      pass
+      Retour(0)
+   elif ancetres_str == "0120":# Choix de la chanson pour l'alarme
+      morceau = musique.getTitre(menus[profondeur])
+      reglages.getAlarmes()[0].setSonMusique(morceau)
+      Retour(0)
    elif ancetres_str == "0121":
       #Réglage volume alarme
       volume = max(0,min(100, menus[profondeur]))
       reglages.getAlarmes()[0].setSonVolume(volume)
+      Retour(0)
    elif ancetres_str == "0131":#Réglage durée aube
       delta = min(500,menus[profondeur]) # limite arbitraire
       reglages.getAlarmes()[0].setAubeDuree(delta)
+      Retour(0)
    elif ancetres_str == "0132":#Réglage intensité aube
       intensite = max(0,min(100,menus[profondeur]))
       reglages.getAlarmes()[0].setAubeIntensite(intensite)
+      Retour(0)
    elif ancetres_str == "03": #activer/désactiver bluetooth
       pass
+   elif ancetres_str == "10":#choix musique
+      print(musique.getListe()[menus[profondeur]])
+      son.setMorceau(musique.getListe()[menus[profondeur]]);
+      son.lireMusique(son.getMorceau())
+      son.setEtat(Son.PLAY)
+      MENUS_AFFICHAGE["11"] = "PAUSE"
+      Retour(0)
    elif ancetres_str == "12":#Réglage volume musique
       volume = max(0,min(100, menus[profondeur]))
+      son.setVolume(volume)
       reglages.setVolume(volume)
    elif ancetres_str == "21":#Réglage intensité écran lampe
       aube.setIntensite(menus[profondeur])
@@ -119,8 +145,6 @@ def Valider(channel):
         print(MENUS_AFFICHAGE[menu_str])
         etat = Aube.ON if etat == Aube.OFF else Aube.OFF
         reglages.getAlarmes()[0].setAubeEtat(etat)
-      elif menu_str == "10":#choix musique
-        pass
       elif menu_str == "11": #play/pause musique (ecran musique)
         etat = son.getEtat()
         if etat == Son.PLAY :

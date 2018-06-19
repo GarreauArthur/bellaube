@@ -77,6 +77,7 @@ class Aube:
 		return self.etat
 
 	def augmenterAube(self, i, duree):
+		duree = duree/i
 		for k in range(0,i+1,1):
 			self.ledPWM.ChangeDutyCycle(k)
 			time.sleep(duree)
@@ -101,7 +102,7 @@ class Aube:
 				print("\n 3 : Allumer la lumière en choisissant votre intensité")
 				print("\n 4 : Utiliser l'aube")
 				print("\n 5 : Quitter le programme \n")
-				choix = input()
+				choix = int(input())
 			if choix == 1:
 				self.allumer()
 			elif choix == 2:
@@ -110,23 +111,24 @@ class Aube:
 				k = -1
 				while k < 0 or k > 100 :
 					print("Choisir l'intensité entre 0 et 100")
-					k = input()
+					k = int(input())
 				self.setIntensite(k)
 			elif choix == 4:
 				k = -1
 				while k < 0 or k > 100 :
 					print("Choisir l'intensité entre 0 et 100")
-					k = input()
+					k = int(input())
 				j = -1
 				while j < 1 or j > 5 :
 					print("Choisir le temps de l'aube entre 1 et 5")
-					j = input()
+					j = int(input())
 				self.aube(k,j)
 			elif choix == 5:
 				break
 
 
 if __name__ == "__main__":
+	GPIO.setmode(GPIO.BOARD)
 	a = Aube()
 	a.choix()
 	a.ledPWM.stop()
