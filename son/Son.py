@@ -25,23 +25,31 @@ class Son:
 		#pygame.mixer.Sound.set_volume(son,0.5)
 		self.volume = 50 # random, je laisse ça à l'équipe son
 		self.etat = Son.PAUSE #permet de savoir si on est en cours de lecture ou non
+		self.morceau = ""
 
 	def lireMusique(self,morceau):
 		"""
 		TODO : Lire un morceau de musique, interagit avec le matériel
 		"""
-		musique=pygame.mixer.Sound(morceau)
-		pygame.mixer.Sound.set_volume(musique,self.volume)
+		pygame.mixer.music.load("%s/%s"% ("./bellaube/liste_musiques/",morceau))
+		pygame.mixer.music.set_volume(self.volume/100)
+		pygame.mixer.music.play()
 
 
 	def play(self):
 		self.setEtat(Son.PLAY)
+		pygame.mixer.music.play()
 
 	def pause(self):
 		"""
 		TODO : faire pause
 		"""
 		self.setEtat(Son.PAUSE)
+		pygame.mixer.music.pause()
+		
+
+	def stop(self):
+		pygame.mixer.music.stop()
 
 	def suivant(self):
 		"""
@@ -89,6 +97,7 @@ class Son:
 		méthode
 		"""
 		self.volume = vol
+		pygame.mixer.music.set_volume(self.volume/100)
 
 	def getVolume(self):
 		return self.volume
@@ -108,6 +117,12 @@ class Son:
 		"""
 		TODO : diminuer le volume de deb vers fin sur une période de temps t
 		"""
+
+	def getMorceau(self):
+		return self.morceau
+
+	def setMorceau(self, m):
+		self.morceau = m
 
 if __name__ == "__main__":
 	s = Son()

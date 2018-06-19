@@ -120,6 +120,9 @@ def Valider(channel):
       pass
    elif ancetres_str == "10":#choix musique
       print(musique.getListe()[menus[profondeur]])
+      son.setMorceau(musique.getListe()[menus[profondeur]]);
+      son.lireMusique(son.getMorceau())
+      son.setEtat(Son.PLAY)
       Retour(0)
    elif ancetres_str == "12":#Réglage volume musique
       volume = max(0,min(100, menus[profondeur]))

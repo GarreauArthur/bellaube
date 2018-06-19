@@ -8,7 +8,7 @@ import time
 pygame.mixer.init(44100,-16,2,2048)
 pygame.mixer.get_init()
 musique=pygame.mixer.Sound("681.wav")
-pygame.mixer.Sound.set_volume(son,0.5)
+pygame.mixer.Sound.set_volume(musique,0.5)
 #initialiser un volume egalement
 volume = 50
 
