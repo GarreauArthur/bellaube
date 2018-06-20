@@ -26,7 +26,7 @@ GPIO.setmode(GPIO.BOARD)
 ## Materiel
 aube = Aube() # l'aube
 son = Son() # le son
-#ecran_h = EcranLCD(ECRAN_HORLOGE_PIN) # ecran horloge 
+ecran_h = EcranLCD(ECRAN_HORLOGE_PIN) # ecran horloge
 #ecran_r = EcranLCD(ECRAN_REGLAGE_PIN) # ecran réglages
 ## Logiciel
 alarme = Alarme()
@@ -233,7 +233,7 @@ thread_menu.start()
 #--------------------------------BOUCLE-PRINCIPALE------------------------------
 
 while(1):
-    print(reglages.getHorloge().now())
+    ecran_h.printString(reglages.getHorloge().now())
     reglages.getHorloge().tictac()
     # pour l'instant on suppose qu'il y a toujours au moins une alarme
     if reglages.getAlarmes()[0].getEtat() == Alarme.ON :
