@@ -4,7 +4,7 @@
 import time
 import RPi.GPIO as GPIO
 from ..data.ConstantePin import *
-
+import _thread
 from __future__ import division
 # Import the PCA9685 module.
 import Adafruit_PCA9685
@@ -126,19 +126,31 @@ class Aube:
 		"""
 		return self.etat
 
-	def augmenterAube(self, i, duree=30):
+	def allumageProgessifAube(self, i=100, duree=30):
 		"""
 		Augmente l'intensite de l'aube de i
 		sur une durée de "duree"
+
+		On suppose que l'aube est éteinte (pour pas se compliquer)
 		"""
-		int_courant = self.intensite
+		def a_p_a_thread(self, i, duree):# oui j'ai le droit
+			duree = duree/i
+			echelon = (Aube.val_max-Aube.val_min)/100# valeur exploitable
+			for k in range(0,i+1,1):
+				val_intensite = k*echelon
+				self.setIntensite(val_intensite)
+				time.sleep(duree)
 
-		duree = duree/i
-		for k in range(0,i+1,1):
-		#	self.ledPWM.ChangeDutyCycle(k)
-		#	time.sleep(duree)
+		i = max(100,min(0,i)) # on s'assure que i est bien entre 0 et 100
+		_thread.start_new_thread(a_p_a_thread,(self,i,duree))
 
-	def diminuerAube(self, duree):
+
+
+	def extinctionProgessiveAube(self, duree):
+		"""
+		Eteint l'aube
+		sur une durée de "duree"
+		"""
 		#iActuel = self.getIntensite()
 		#for k in range(iActuel,-1,-1):
 		#	self.ledPWM.ChangeDutyCycle(k)
