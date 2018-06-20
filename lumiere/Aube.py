@@ -142,20 +142,33 @@ class Aube:
 				time.sleep(duree)
 
 		i = max(100,min(0,i)) # on s'assure que i est bien entre 0 et 100
-		_thread.start_new_thread(a_p_a_thread,(self,i,duree))
+		try:
+			_thread.start_new_thread(a_p_a_thread,(self,i,duree))
+		except:
+			print("Erreur allumageProgessifAube")
 
 
 
-	def extinctionProgessiveAube(self, duree):
+	def extinctionProgessiveAube(self, duree=30):
 		"""
 		Eteint l'aube
 		sur une durée de "duree"
 		"""
-		#iActuel = self.getIntensite()
-		#for k in range(iActuel,-1,-1):
-		#	self.ledPWM.ChangeDutyCycle(k)
-		#	time.sleep(duree)
 
+		def e_p_a_thread(self,duree):
+			iActuelle = self.getIntensite()#intensité actuelle
+			if iActuelle == 0 :
+				return
+			echelon = (Aube.val_max-Aube.val_min)/100
+			duree = duree/iActuelle
+			for k in range(iActuelle-1,-1,-1):
+				self.setIntensite()
+				time.sleep(duree)
+
+		try:
+			_thread.start_new_thread(e_p_a_thread,(self,duree))
+		except:
+			print("Erreur extinctionProgessiveAube")
 
 
 	def aube(self, i, duree):
