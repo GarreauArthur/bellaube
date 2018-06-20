@@ -172,8 +172,15 @@ class Aube:
 
 
 	def aube(self, i, duree):
-		self.augmenterAube(i,duree)
-		self.diminuerAube(duree)
+		def aube_thread(self,duree):
+			self.allumageProgessifAube(30)
+			sleep(duree + 30)
+			self.extinctionProgessiveAube(30)
+		
+		try:
+			_thread.start_new_thread(e_p_a_thread,(self,duree))
+		except:
+			print("Erreur extinctionProgessiveAube")
 
 	def choix(self):
 		while True :
