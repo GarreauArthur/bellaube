@@ -117,6 +117,7 @@ def Valider(channel):
       Retour(0)
    elif ancetres_str == "0132":#Réglage intensité aube
       intensite = max(0,min(100,menus[profondeur]))
+      aube.setIntensite(intensite)
       reglages.getAlarmes()[0].setAubeIntensite(intensite)
       Retour(0)
    elif ancetres_str == "03": #activer/désactiver bluetooth
@@ -133,7 +134,8 @@ def Valider(channel):
       son.setVolume(volume)
       reglages.setVolume(volume)
    elif ancetres_str == "21":#Réglage intensité écran lampe
-      aube.setIntensite(menus[profondeur])
+      intensite = max(0,min(100, menus[profondeur]))
+      aube.setIntensite(intensite)
    else:
       menu_str = "".join(str(b) for b in menus[:profondeur+1])
       if menu_str == "010": #activer/desactiver alarme
@@ -142,7 +144,7 @@ def Valider(channel):
         print(MENUS_AFFICHAGE[menu_str])
         etat = (Alarme.ON if etat == Alarme.OFF else Alarme.OFF)
         reglages.getAlarmes()[0].setEtat(etat)
-      elif menu_str == "0130": # activer désactiver aube
+      elif menu_str == "0130": # activer désactiver aube (alarme)
         etat = reglages.getAlarmes()[0].getAubeEtat()
         MENUS_AFFICHAGE[menu_str] = ("Activer Aube" if etat == Aube.ON else "Desactiver Aube")
         print(MENUS_AFFICHAGE[menu_str])

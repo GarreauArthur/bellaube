@@ -1,9 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
-
+from __future__ import division
 import time
 import RPi.GPIO as GPIO
 from ..data.ConstantePin import *
+import _thread
+# Import the PCA9685 module.
+import Adafruit_PCA9685
+
+"""
+TODO :
+* init
+* allumer
+* eteindre
+"""
 
 class Aube:
 	"""
@@ -12,33 +22,65 @@ class Aube:
 	"""
 	ON = 1
 	OFF = 0
+	# Configure min and max servo pulse lengths
+	val_min = int(150)   # Min pulse length out of 4096
+	val_max = int(3000)  # Max pulse length out of 4096
 
 	def __init__(self):
 		self.intensite = 0
 		self.etat = Aube.OFF
 		#BCM = numerotation avec les GPIO
 		#BOARD = numerotation avec les pins
-		GPIO.setup(PIN_GPIO_AUBE, GPIO.OUT)
+#		GPIO.setup(PIN_GPIO_AUBE, GPIO.OUT)
 		#GPIO 18 - pin 12 en sortie
-		self.ledPWM = GPIO.PWM(PIN_GPIO_AUBE, 1000)
-		self.ledPWM.start(0)
-		self.eteindre()
+#		self.ledPWM = GPIO.PWM(PIN_GPIO_AUBE, 1000)
+#		self.ledPWM.start(0)
+#		self.eteindre()
 
-	def allumer(self):
+		# Initialise the PCA9685 using the default address (0x40).
+		self.pwm = Adafruit_PCA9685.PCA9685(0x42)
+		self.pwm.set_pwm_freq(140)# set frequency
+
+
+	def allumer(self, val_intensite = 50):
 		"""
-		Allumer matériellement l'aube
+		Allumer matériellement l'aube à l'intentiste "val_intensite"
+		par défaut l'intensité est de 50
 		"""
+		#on s'assure d'avoir une bonne valeur
+		val_intensite = max(min(100,val_intensite),0)
+		# on récupère une valeur exploitable
+		val_intensite = val_intensite*(Aube.val_max-Aube.val_min)/100
+		# on stocke nos valeurs et on change d'état
 		self.etat = Aube.ON
-		self.ledPWM.ChangeDutyCycle(100)
-		self.intensite = 100
+		self.intensite = val_intensite
+		val_intensite = int(val_intensite)
+		# on allume nos 7 channels
+		# On a 7 channels set_pwm(channel, on, off)
+		self.pwm.set_pwm(0, 0, val_intensite)
+		self.pwm.set_pwm(1, 0, val_intensite)
+		self.pwm.set_pwm(2, 0, val_intensite)
+		self.pwm.set_pwm(3, 0, val_intensite)
+		self.pwm.set_pwm(4, 0, val_intensite)
+		self.pwm.set_pwm(5, 0, val_intensite)
+		self.pwm.set_pwm(6, 0, val_intensite)
 
 	def eteindre(self):
 		"""
 		Eteindre matériellement l'aube
 		"""
 		self.etat = Aube.OFF
-		self.ledPWM.ChangeDutyCycle(0)
+		#self.ledPWM.ChangeDutyCycle(0)
 		self.intensite = 0
+		# On a 7 channels set_pwm(channel, on, off)
+		self.pwm.set_pwm(0, 0, Aube.val_min)
+		self.pwm.set_pwm(1, 0, Aube.val_min)
+		self.pwm.set_pwm(2, 0, Aube.val_min)
+		self.pwm.set_pwm(3, 0, Aube.val_min)
+		self.pwm.set_pwm(4, 0, Aube.val_min)
+		self.pwm.set_pwm(5, 0, Aube.val_min)
+		self.pwm.set_pwm(6, 0, Aube.val_min)
+
 
 	def setIntensite(self,i):
 		"""
@@ -49,8 +91,16 @@ class Aube:
 		Il faut vérifier que i soit bien dans l'échelle de l'intensité
 		"""
 		i = max(min(0,i),100)
-		self.ledPWM.ChangeDutyCycle(i)
+		#self.ledPWM.ChangeDutyCycle(i)
 		self.intensite = i
+		val_i = i*(Aube.val_max-Aube.val_min)/100# valeur exploitable
+		val_i = int(val_i)
+		val_i = (val_i*7)/100
+		for k in range(7):
+			if k < val_i:
+				self.pwm.set_pwm(k,0,Aube.val_max)
+			else:
+				self.pwm.set_pwm(k,0,Aube.val_min)
 
 	def getIntensite(self):
 		return self.intensite
@@ -76,21 +126,61 @@ class Aube:
 		"""
 		return self.etat
 
-	def augmenterAube(self, i, duree):
-		duree = duree/i
-		for k in range(0,i+1,1):
-			self.ledPWM.ChangeDutyCycle(k)
-			time.sleep(duree)
+	def allumageProgessifAube(self, i=100, duree=30):
+		"""
+		Augmente l'intensite de l'aube de i
+		sur une durée de "duree"
 
-	def diminuerAube(self, duree):
-		iActuel = self.getIntensite()
-		for k in range(iActuel,-1,-1):
-			self.ledPWM.ChangeDutyCycle(k)
-			time.sleep(duree)
+		On suppose que l'aube est éteinte (pour pas se compliquer)
+		"""
+		def a_p_a_thread(self, i, duree):# oui j'ai le droit
+			duree = duree/i
+			echelon = (Aube.val_max-Aube.val_min)/100# valeur exploitable
+			for k in range(0,i+1,1):
+				val_intensite = k*echelon
+				self.setIntensite(val_intensite)
+				time.sleep(duree)
+
+		i = max(100,min(0,i)) # on s'assure que i est bien entre 0 et 100
+		try:
+			_thread.start_new_thread(a_p_a_thread,(self,i,duree))
+		except:
+			print("Erreur allumageProgessifAube")
+
+
+
+	def extinctionProgessiveAube(self, duree=30):
+		"""
+		Eteint l'aube
+		sur une durée de "duree"
+		"""
+
+		def e_p_a_thread(self,duree):
+			iActuelle = self.getIntensite()#intensité actuelle
+			if iActuelle == 0 :
+				return
+			echelon = (Aube.val_max-Aube.val_min)/100
+			duree = duree/iActuelle
+			for k in range(iActuelle-1,-1,-1):
+				self.setIntensite()
+				time.sleep(duree)
+
+		try:
+			_thread.start_new_thread(e_p_a_thread,(self,duree))
+		except:
+			print("Erreur extinctionProgessiveAube")
+
 
 	def aube(self, i, duree):
-		self.augmenterAube(i,duree)
-		self.diminuerAube(duree)
+		def aube_thread(self,duree):
+			self.allumageProgessifAube(30)
+			sleep(duree + 30)
+			self.extinctionProgessiveAube(30)
+		
+		try:
+			_thread.start_new_thread(e_p_a_thread,(self,duree))
+		except:
+			print("Erreur extinctionProgessiveAube")
 
 	def choix(self):
 		while True :
