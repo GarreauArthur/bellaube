@@ -27,7 +27,7 @@ GPIO.setmode(GPIO.BOARD)
 aube = Aube() # l'aube
 son = Son() # le son
 ecran_h = EcranLCD(ECRAN_HORLOGE_PIN) # ecran horloge
-#ecran_r = EcranLCD(ECRAN_REGLAGE_PIN) # ecran réglages
+ecran_r = EcranLCD(ECRAN_REGLAGE_PIN) # ecran réglages
 ## Logiciel
 alarme = Alarme()
 alarme.setHeuresAlarme(7) # on met l'alarme par défaut à 7 heure
@@ -54,10 +54,15 @@ molette_2 = BasicEncoder(MOLETTE_2_PIN_1,MOLETTE_2_PIN_2)
 def reveiller():
     global reglages, aube, son, BOUTON_REVEIL
     al = reglages.getAlarmes()[0] # on récupère l'objet alarme
-    print("DEBOUT")
+    ecran_r.printString("DEBOUT")
     # gestion de l'aube
     if al.getAubeEtat() == Alarme.ON:
-      pass
+      try:
+        a_int = al.getAubeIntensite()
+        a_duree = al.getAubeDuree()
+        _thread.start_new_thread(aube.augmenterAube,(a_int, a_duree))
+      except:
+        ecran_r.printString("erreur allumage aube")
 
     if al.getSonEtat() == Alarme.ON:
       titre = al.getSonMusique()
@@ -123,7 +128,7 @@ def Valider(channel):
    elif ancetres_str == "03": #activer/désactiver bluetooth
       pass
    elif ancetres_str == "10":#choix musique
-      print(musique.getListe()[menus[profondeur]])
+      ecran_r.printString(musique.getListe()[menus[profondeur]])
       son.setMorceau(musique.getListe()[menus[profondeur]]);
       son.lireMusique(son.getMorceau())
       son.setEtat(Son.PLAY)
@@ -141,13 +146,13 @@ def Valider(channel):
       if menu_str == "010": #activer/desactiver alarme
         etat = reglages.getAlarmes()[0].getEtat()
         MENUS_AFFICHAGE[menu_str] = ("Activer Alarme" if etat == Alarme.ON else "Desactiver Alarme")
-        print(MENUS_AFFICHAGE[menu_str])
+        ecran_r.printString(MENUS_AFFICHAGE[menu_str])
         etat = (Alarme.ON if etat == Alarme.OFF else Alarme.OFF)
         reglages.getAlarmes()[0].setEtat(etat)
       elif menu_str == "0130": # activer désactiver aube (alarme)
         etat = reglages.getAlarmes()[0].getAubeEtat()
         MENUS_AFFICHAGE[menu_str] = ("Activer Aube" if etat == Aube.ON else "Desactiver Aube")
-        print(MENUS_AFFICHAGE[menu_str])
+        ecran_r.printString(MENUS_AFFICHAGE[menu_str])
         etat = Aube.ON if etat == Aube.OFF else Aube.OFF
         reglages.getAlarmes()[0].setAubeEtat(etat)
       elif menu_str == "11": #play/pause musique (ecran musique)
@@ -155,22 +160,21 @@ def Valider(channel):
         if etat == Son.PLAY :
           son.pause()
           MENUS_AFFICHAGE["11"] = "PLAY"
-          print(MENUS_AFFICHAGE[menu_str])
+          ecran_r.printString(MENUS_AFFICHAGE[menu_str])
         else:
           MENUS_AFFICHAGE["11"] = "PAUSE"
-          print(MENUS_AFFICHAGE[menu_str])
+          ecran_r.printString(MENUS_AFFICHAGE[menu_str])
           son.play()
       elif menu_str == "20": # allumer/éteindre aube
         etat = aube.getEtat()
         MENUS_AFFICHAGE[menu_str] = ("Allumer Aube" if etat == Aube.ON else "Eteindre Aube")
-        print(MENUS_AFFICHAGE[menu_str])
+        ecran_r.printString(MENUS_AFFICHAGE[menu_str])
         etat = Aube.ON if etat == Aube.OFF else Aube.OFF
         aube.setEtat(etat)
       elif profondeur < 4 :
          profondeur += 1
          menu_str = "".join(str(b) for b in menus[:profondeur+1])
-         print("---------------------------")
-         print(MENUS_AFFICHAGE[menu_str])
+         ecran_r.printString(MENUS_AFFICHAGE[menu_str])
 
 GPIO.add_event_detect(BOUTON_VALIDER, GPIO.FALLING, callback=Valider, bouncetime=300)
 
@@ -186,8 +190,7 @@ def Retour(channel):
       profondeur -= 1
       #modifier l'affichage
       menu_str = "".join(str(b) for b in menus[:profondeur+1])
-      print("---------------------------")
-      print(MENUS_AFFICHAGE[menu_str])
+      ecran_r.printString(MENUS_AFFICHAGE[menu_str])
 
 GPIO.add_event_detect(BOUTON_RETOUR, GPIO.FALLING, callback=Retour, bouncetime=300)
 
@@ -219,17 +222,17 @@ class ThreadMenu(Thread):
                menus[profondeur] = 0
             elif menus[profondeur] > 100 :
                menus[profondeur] = 100
-            print(menus[profondeur])
+            ecran_r.printString(menus[profondeur])
          elif nb_sous_menus == 1440 : # si une heure
             heures = menus[profondeur]//60
             minutes = menus[profondeur] % 60 
             heures = max(0,min(23, heures))
             minutes = max(0,min(59, minutes))
-            print(str(heures) + ":" + str(minutes))
+            ecran_r.printString(str(heures) + ":" + str(minutes))
          else: # si menu normal
             menus[profondeur] = menus[profondeur]%nb_sous_menus
             menus_str = "".join(str(a) for a in menus[:profondeur+1])
-            print(MENUS_AFFICHAGE[menus_str])
+            ecran_r.printString(MENUS_AFFICHAGE[menus_str])
 
 # LANCEMENT THREAD menu
 thread_menu = ThreadMenu()
@@ -238,7 +241,7 @@ thread_menu.start()
 #--------------------------------BOUCLE-PRINCIPALE------------------------------
 
 while(1):
-    ecran_h.printString(reglages.getHorloge().now())
+    ecran_h.ecran_r.printStringString(reglages.getHorloge().now())
     reglages.getHorloge().tictac()
     # pour l'instant on suppose qu'il y a toujours au moins une alarme
     if reglages.getAlarmes()[0].getEtat() == Alarme.ON :
@@ -247,7 +250,7 @@ while(1):
             try:
                 _thread.start_new_thread(reveiller,())
             except:
-                print("bon bah désolé, l'utilisateur ne sera pas réveillé")
+                ecran_r.printString("bon bah désolé, l'utilisateur ne sera pas réveillé")
     sleep(1)#on attend un seconde
 
 
