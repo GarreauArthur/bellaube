@@ -66,8 +66,8 @@ def reveiller():
       son.setVolume(al.getSonVolume())
       son.lireMusique(titre)
    
-   GPIO.wait_for_edge(BOUTON_REVEIL, GPIO.RISING)
-   son.stop()
+    GPIO.wait_for_edge(BOUTON_REVEIL, GPIO.RISING)
+    son.stop()
 
 GPIO.setup(BOUTON_REVEIL, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
