@@ -241,7 +241,7 @@ thread_menu.start()
 #--------------------------------BOUCLE-PRINCIPALE------------------------------
 
 while(1):
-    ecran_h.ecran_r.printStringString(reglages.getHorloge().now())
+    ecran_h.printString(reglages.getHorloge().now())
     reglages.getHorloge().tictac()
     # pour l'instant on suppose qu'il y a toujours au moins une alarme
     if reglages.getAlarmes()[0].getEtat() == Alarme.ON :
@@ -250,7 +250,7 @@ while(1):
             try:
                 _thread.start_new_thread(reveiller,())
             except:
-                ecran_r.printString("bon bah désolé, l'utilisateur ne sera pas réveillé")
+                ecran_r.printString("bon bah desole, l'utilisateur ne sera pas reveille")
     sleep(1)#on attend un seconde
 
 

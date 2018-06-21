@@ -74,20 +74,20 @@ MENUS_AFFICHAGE = {
   "000"   : "modification_de_l'heure",
   "01"    : "Alarme",
   "010"   : "Activer Alarme",# désactiver alarme
-  "011"   : "Régler heure alarme",
+  "011"   : "Regler heure alarme",
   "0110"  : "00h00",
-  "012"   : "Réglage alarme sonore",
+  "012"   : "Reglage alarme sonore",
   "0120"  : "Liste de musique",
   "01200" : "Musique par Defaut",
   "0121"  : "Volume",
   "01210" : "0",
   "013"   : "Config Aube",
   "0130"  : "Activer Aube", #/Désactiver",
-  "0131"  : "Durée",
+  "0131"  : "Duree",
   "01310" : "0 sec",
-  "0132"  : "Intensité",
+  "0132"  : "Intensite",
   "01320" : "0", #échelle_intensité_aube
-  "02"    : "Lumière",
+  "02"    : "Lumiere",
   "020"   : "0",#"échelle_intensité_lumière",
   "03"    : "Bluetooth",
   "030"   : "activer/désactiver",
@@ -95,10 +95,10 @@ MENUS_AFFICHAGE = {
   "10"    : "choix_musique",
   "11"    : "PLAY",
   "12"    : "volume",
-  "120"   : "échelle_volume",
+  "120"   : "echelle_volume",
   "2"     : "Lampe",
   "20"    : "Allumer aube",
-  "21"    : "Intensité",
+  "21"    : "Intensite",
   "210"   : "0"
 }
 
