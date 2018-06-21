@@ -52,21 +52,24 @@ molette_2 = BasicEncoder(MOLETTE_2_PIN_1,MOLETTE_2_PIN_2)
 #-------------------------- gestion de threads ---------------------------------
 #     reveil
 def reveiller():
-    global reglages, aube, son
+    global reglages, aube, son, BOUTON_REVEIL
     al = reglages.getAlarmes()[0] # on récupère l'objet alarme
     print("DEBOUT")
     # gestion de l'aube
     if al.getAubeEtat() == Alarme.ON:
-      try:
-        a_int = al.getAubeIntensite()
-        a_duree = al.getAubeDuree()
-        _thread.start_new_thread(aube.augmenterAube,(a_int, a_duree))
-      except:
-        print("erreur allumage aube")
+      pass
 
     if al.getSonEtat() == Alarme.ON:
-      pass
-      
+      titre = al.getSonMusique()
+      if titre == "":
+         titre = "La tartine de beurre.mp3"
+      son.setVolume(al.getSonVolume())
+      son.lireMusique(titre)
+   
+   GPIO.wait_for_edge(BOUTON_REVEIL, GPIO.RISING)
+   son.stop()
+
+GPIO.setup(BOUTON_REVEIL, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     # gestion du son
 #-------------------------Gestion de l'appui sur le bouton---------------------
