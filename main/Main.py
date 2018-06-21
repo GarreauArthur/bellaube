@@ -114,6 +114,7 @@ def Valider(channel):
       Retour(0)
    elif ancetres_str == "0132":#Réglage intensité aube
       intensite = max(0,min(100,menus[profondeur]))
+      aube.setIntensite(intensite)
       reglages.getAlarmes()[0].setAubeIntensite(intensite)
       Retour(0)
    elif ancetres_str == "03": #activer/désactiver bluetooth

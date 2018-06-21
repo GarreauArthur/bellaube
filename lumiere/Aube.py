@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
-
+from __future__ import division
 import time
 import RPi.GPIO as GPIO
 from ..data.ConstantePin import *
 import _thread
-from __future__ import division
 # Import the PCA9685 module.
 import Adafruit_PCA9685
 
@@ -24,8 +23,8 @@ class Aube:
 	ON = 1
 	OFF = 0
 	# Configure min and max servo pulse lengths
-	val_min = 150   # Min pulse length out of 4096
-	val_max = 3000  # Max pulse length out of 4096
+	val_min = int(150)   # Min pulse length out of 4096
+	val_max = int(3000)  # Max pulse length out of 4096
 
 	def __init__(self):
 		self.intensite = 0
@@ -39,8 +38,8 @@ class Aube:
 #		self.eteindre()
 
 		# Initialise the PCA9685 using the default address (0x40).
-		pwm = Adafruit_PCA9685.PCA9685(0x42)
-		pwm.set_pwm_freq(140)# set frequency
+		self.pwm = Adafruit_PCA9685.PCA9685(0x42)
+		self.pwm.set_pwm_freq(140)# set frequency
 
 
 	def allumer(self, val_intensite = 50):
@@ -55,31 +54,32 @@ class Aube:
 		# on stocke nos valeurs et on change d'état
 		self.etat = Aube.ON
 		self.intensite = val_intensite
+		val_intensite = int(val_intensite)
 		# on allume nos 7 channels
 		# On a 7 channels set_pwm(channel, on, off)
-		pwm.set_pwm(0, 0, val_intensite)
-		pwm.set_pwm(1, 0, val_intensite)
-		pwm.set_pwm(2, 0, val_intensite)
-		pwm.set_pwm(3, 0, val_intensite)
-		pwm.set_pwm(4, 0, val_intensite)
-		pwm.set_pwm(5, 0, val_intensite)
-		pwm.set_pwm(6, 0, val_intensite)
+		self.pwm.set_pwm(0, 0, val_intensite)
+		self.pwm.set_pwm(1, 0, val_intensite)
+		self.pwm.set_pwm(2, 0, val_intensite)
+		self.pwm.set_pwm(3, 0, val_intensite)
+		self.pwm.set_pwm(4, 0, val_intensite)
+		self.pwm.set_pwm(5, 0, val_intensite)
+		self.pwm.set_pwm(6, 0, val_intensite)
 
 	def eteindre(self):
 		"""
 		Eteindre matériellement l'aube
 		"""
 		self.etat = Aube.OFF
-		self.ledPWM.ChangeDutyCycle(0)
+		#self.ledPWM.ChangeDutyCycle(0)
 		self.intensite = 0
 		# On a 7 channels set_pwm(channel, on, off)
-		pwm.set_pwm(0, 0, Aube.val_min)
-		pwm.set_pwm(1, 0, Aube.val_min)
-		pwm.set_pwm(2, 0, Aube.val_min)
-		pwm.set_pwm(3, 0, Aube.val_min)
-		pwm.set_pwm(4, 0, Aube.val_min)
-		pwm.set_pwm(5, 0, Aube.val_min)
-		pwm.set_pwm(6, 0, Aube.val_min)
+		self.pwm.set_pwm(0, 0, Aube.val_min)
+		self.pwm.set_pwm(1, 0, Aube.val_min)
+		self.pwm.set_pwm(2, 0, Aube.val_min)
+		self.pwm.set_pwm(3, 0, Aube.val_min)
+		self.pwm.set_pwm(4, 0, Aube.val_min)
+		self.pwm.set_pwm(5, 0, Aube.val_min)
+		self.pwm.set_pwm(6, 0, Aube.val_min)
 
 
 	def setIntensite(self,i):
@@ -94,13 +94,13 @@ class Aube:
 		#self.ledPWM.ChangeDutyCycle(i)
 		self.intensite = i
 		val_i = i*(Aube.val_max-Aube.val_min)/100# valeur exploitable
-		pwm.set_pwm(0, 0, val_i)
-		pwm.set_pwm(1, 0, val_i)
-		pwm.set_pwm(2, 0, val_i)
-		pwm.set_pwm(3, 0, val_i)
-		pwm.set_pwm(4, 0, val_i)
-		pwm.set_pwm(5, 0, val_i)
-		pwm.set_pwm(6, 0, val_i)
+		val_i = int(val_i)
+		val_i = (val_i*7)/100
+		for k in range(7):
+			if k < val_i:
+				self.pwm.set_pwm(k,0,Aube.val_max)
+			else:
+				self.pwm.set_pwm(k,0,Aube.val_min)
 
 	def getIntensite(self):
 		return self.intensite
